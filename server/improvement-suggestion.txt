@@ -1,0 +1,4 @@
+1. Implement middleware like helmet for added security, such as protecting your app from some well-known web vulnerabilities by setting appropriate HTTP headers.
+
+2. import helmet from 'helmet';  // Additional security middleware
+3. import rateLimit from 'express-rate-limit';  // For rate limiting
