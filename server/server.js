@@ -10,6 +10,7 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import { limiter } from './middleware/rateLimitMiddleware.js';
 
 //app cre
 const app = express();
@@ -20,20 +21,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use(cookieParser());
-
-//  Rate limiting middleware - create separetly
-// const limiter = rateLimit({
-//     windowMs: 15 * 60 * 1000,  // 15 minutes
-//     max: 100,  // limit each IP to 100 requests per windowMs
-//   });
-// app.use(limiter);
+app.use(limiter);
 
 //Routes
-app.use("/",(req,res) => {
+app.use("/", (req, res) => {
     res.status(200).json({
-        success : true,
-        statusCode : 200,
-        message : "Book testing Api."
+        success: true,
+        statusCode: 200,
+        message: "Book testing Api."
     })
 })
 app.use("/api/v1/auth", authRoutes)
