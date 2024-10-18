@@ -6,10 +6,12 @@ import rateLimit from 'express-rate-limit';// For rate limiting - create separte
 import './config/db.config.js'
 
 // Routes imports
-// import authRoutes from './routes/authRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 // import userRoutes from './routes/userRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
 import { limiter } from './middleware/rateLimitMiddleware.js';
+import { validateToken } from './middleware/authMiddleware.js';
+import { routesErrorHandler } from './middleware/errorHandler.js';
 // import orderRoutes from './routes/orderRoutes.js';
 // import { limiter } from './middleware/rateLimitMiddleware.js';
 
@@ -25,10 +27,10 @@ app.use(cookieParser());
 app.use(limiter);
 
 
-// app.use("/api/v1/auth", authRoutes)
+app.use("/api/v1/auth", authRoutes)
 // app.use("/api/v1/user", userRoutes)
 app.use("/api/v1/book", bookRoutes)
-// app.use("/api/v1/order", orderRoutes)
+// app.use("/api/v1/order",validateToken, orderRoutes)
 
 //Fallback for unmatched routes (404)
 app.use((req, res) => {
@@ -40,21 +42,7 @@ app.use((req, res) => {
 })
 
 // Centralized error handling middleware
-app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500;
-    const message = err.message || 'Internal Server Error!';
-
-    // Log detailed error only in development
-    if (process.env.NODE_ENV === 'development') {
-        console.error(err.stack);
-    }
-
-    res.status(statusCode).json({
-        success: false,
-        statusCode,
-        message
-    })
-})
+app.use(routesErrorHandler);
 
 //staring server
 app.listen(PORT, () => {

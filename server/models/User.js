@@ -1,5 +1,24 @@
 import mongose from 'mongoose';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
+
+
+const addressSchema = new mongose.Schema({
+    addressLine1: { type: String, trim: true },
+    addressLine2: { type: String, trim: true },
+    city: { type: String, trim: true },
+    state: { type: String, trim: true },
+    country: { type: String, trim: true },
+    zipCode: {
+        type: String, trim: true,
+        validation: {
+            validator: function (v) {
+                return /^\d{5}(-\d{4})?$/.test(v);
+            },
+            message: props => `${props.value} is not a valid ZIP code !`
+        }
+    },
+
+})
 
 const userSchema = new mongose.Schema(
     {
@@ -26,27 +45,15 @@ const userSchema = new mongose.Schema(
         },
         password: { type: String, required: true },
         Address: addressSchema,
-        timestamps: true
-    }
-)
-
-const addressSchema = new mongose.Schema({
-    addressLine1: { type: String, trim: true },
-    addressLine2: { type: String, trim: true },
-    city: { type: String, trim: true },
-    state: { type: String, trim: true },
-    country: { type: String, trim: true },
-    zipCode: {
-        type: String, trim: true,
-        validation: {
-            validator: function (v) {
-                return /^\d{5}(-\d{4})?$/.test(v);
-            },
-            message: props => `${props.value} is not a valid ZIP code !`
-        }
+        role: {
+            type: String,
+            enum: ['admin', 'seller', 'buyer'],
+            default: 'buyer'
+        },
+        
     },
-
-})
+    {timestamps: true}
+)
 
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
