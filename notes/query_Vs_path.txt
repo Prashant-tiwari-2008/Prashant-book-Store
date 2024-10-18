@@ -1,0 +1,24 @@
+Route Parameters vs. Query Parameters:
+
+Route parameters: These are dynamic values that are part of the URL path. They are used to specify specific resources or data within a route. In your case, /books/:id defines :id as a route parameter.
+Query parameters: These are optional key-value pairs appended to the URL after a question mark (?). They are used to provide additional information or filters for the request.
+In your case:
+
+The URL http://localhost:4001/api/v1/book/?id=B001 contains a query parameter: id=B001.
+Express.js will match this URL to the route routes.get("/", getAllBooks); because it doesn't have a route parameter defined for id.
+To fix this:
+
+You need to create a route that specifically handles query parameters for id:
+
+JavaScript
+routes.get("/?id=:id", getSingleBook);
+Use code with caution.
+
+This route will match URLs that have a query parameter named id. Now, when you hit http://localhost:4001/api/v1/book/?id=B001, it will correctly call the getSingleBook controller.
+
+Alternative:
+
+If you prefer to use route parameters for id, you can modify your URL to:
+
+http://localhost:4001/api/v1/book/B001
+This will directly match the routes.get("/:id", getSingleBook); route and call the getSingleBook controller.

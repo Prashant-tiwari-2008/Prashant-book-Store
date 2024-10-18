@@ -6,11 +6,12 @@ import rateLimit from 'express-rate-limit';// For rate limiting - create separte
 import './config/db.config.js'
 
 // Routes imports
-import authRoutes from './routes/authRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+// import authRoutes from './routes/authRoutes.js';
+// import userRoutes from './routes/userRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
 import { limiter } from './middleware/rateLimitMiddleware.js';
+// import orderRoutes from './routes/orderRoutes.js';
+// import { limiter } from './middleware/rateLimitMiddleware.js';
 
 //app cre
 const app = express();
@@ -23,18 +24,11 @@ app.use(cors())
 app.use(cookieParser());
 app.use(limiter);
 
-//Routes
-app.use("/", (req, res) => {
-    res.status(200).json({
-        success: true,
-        statusCode: 200,
-        message: "Book testing Api."
-    })
-})
-app.use("/api/v1/auth", authRoutes)
-app.use("/api/v1/user", userRoutes)
+
+// app.use("/api/v1/auth", authRoutes)
+// app.use("/api/v1/user", userRoutes)
 app.use("/api/v1/book", bookRoutes)
-app.use("/api/v1/order", orderRoutes)
+// app.use("/api/v1/order", orderRoutes)
 
 //Fallback for unmatched routes (404)
 app.use((req, res) => {

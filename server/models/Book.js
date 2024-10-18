@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
+// todo : review and category 
 const bookSchema = new mongoose.Schema(
     {
-        bookId: { type: String, required: true },
+        id: { type: String, required: true },
         title: { type: String, required: true, trim: true },
         author: { type: String, required: true, trim: true },
         ISBN: {
@@ -23,11 +24,11 @@ const bookSchema = new mongoose.Schema(
                 message: props => `${props.value} has too many decimal places, only one decimal place is allowed`
             }
         },
-        review: [{
-            userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-            comment: { Type: String, required: true },
-            createdAt: { type: Date, default: Date.now }
-        }],
+        // review: [{
+        //     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        //     comment: { type: String, required: true },
+        //     createdAt: { type: Date, default: Date.now }
+        // }],
         publisher: { type: String, trim: true },
         publicationDate: { type: Date, default: Date.now },
         price: { type: Number, required: true, min: [0, 'Price must be a positive value'] },
