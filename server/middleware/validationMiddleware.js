@@ -23,7 +23,7 @@ export const validateBookCreation = [
     check('title', 'Title is required').notEmpty(),
     check('author', 'Author is required').notEmpty(),
     check('price', 'Price must be a number').isNumeric(),
-    check('stock', 'Stock must be a number').isInt({ min: 0 }),
+    // check('stock', 'Stock must be a number').isInt({ min: 0 }),
     // check('category', 'Category is required').notEmpty(),
 
     (req, res, next) => {
@@ -33,7 +33,6 @@ export const validateBookCreation = [
                 success: false,
                 statusCode: 400,
                 message: errors.array()
-
             })
         }
         next(); 

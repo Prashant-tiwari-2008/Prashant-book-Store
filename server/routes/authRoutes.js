@@ -2,10 +2,11 @@ import express from 'express';
 import { register, login, logout, forgotPassword, resetPassword, verifyEmail, resendVerificationEmail, refreshToken } from '../controllers/userController.js';
 import { validateToken } from '../middleware/authMiddleware.js';
 import { loginLimiter } from '../middleware/rateLimitMiddleware.js';
+import { validateUserRegister } from '../middleware/validationMiddleware.js';
 
 const routes = express.Router();
 
-routes.post("/signup", register);
+routes.post("/signup", validateUserRegister, register);
 routes.post("/login", loginLimiter, login);
 routes.post("/signout", validateToken, logout);
 routes.post("/forgot-password", forgotPassword);

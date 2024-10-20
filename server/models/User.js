@@ -22,7 +22,6 @@ const addressSchema = new mongose.Schema({
 
 const userSchema = new mongose.Schema(
     {
-        customerId: { type: String, required: true, unique: true },
         firstName: { type: String, required: true, trim: true },
         lastName: { type: String, trim: true },
         email: {
@@ -74,5 +73,5 @@ userSchema.methods.comparePassword = async function (condidatePassword) {
 }
 
 // Index fields that are frequently queried
-userSchema.index({ email: 1, customerId: 1 });
+userSchema.index({ email: 1});
 export default mongose.model('User', userSchema)

@@ -1,21 +1,21 @@
 import express from 'express';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
-import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';// For rate limiting - create separte middle ware
+import helmet from 'helmet'; // todo : need to add
 import './config/db.config.js'
 
 // Routes imports
 import authRoutes from './routes/authRoutes.js';
-// import userRoutes from './routes/userRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+
+//middlewares import
 import { limiter } from './middleware/rateLimitMiddleware.js';
 import { validateToken } from './middleware/authMiddleware.js';
 import { routesErrorHandler } from './middleware/errorHandler.js';
-// import orderRoutes from './routes/orderRoutes.js';
-// import { limiter } from './middleware/rateLimitMiddleware.js';
 
-//app cre
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -28,9 +28,9 @@ app.use(limiter);
 
 
 app.use("/api/v1/auth", authRoutes)
-// app.use("/api/v1/user", userRoutes)
+app.use("/api/v1/user", userRoutes)
 app.use("/api/v1/book", bookRoutes)
-// app.use("/api/v1/order",validateToken, orderRoutes)
+app.use("/api/v1/order",validateToken, orderRoutes)
 
 //Fallback for unmatched routes (404)
 app.use((req, res) => {

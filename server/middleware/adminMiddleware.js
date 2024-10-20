@@ -10,10 +10,11 @@ export const validateAdminRole = (req, res, next) => {
     }
 }
 
+
 export const validateSellerRole = (req, res, next) => {
     if (req.user && (req.user.role === 'admin' || req.user.role === 'seller')) {
         next();
-    } else {
+    } else {    
         res.status(403).json({
             success: false,
             statusCode: 403,
