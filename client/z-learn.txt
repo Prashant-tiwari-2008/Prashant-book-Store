@@ -1,3 +1,20 @@
 Package to explore => 
 1.redux-persist
-2
+2.flowbite-react
+3.react-circular-progressbar
+4.react-quill
+
+
+need to install pacckage
+2. Redux toolkit
+3. React query
+4. Sytled components or emotion
+5. Framer Motion
+6. Tanwind Css
+7. Jest
+8. React Laxy and suspended
+9.React Helmet
+
+installed Package
+1. talwind css
+2. React router v6
