@@ -15,36 +15,40 @@ import OrderHistory from '../pages/User/OrderHistory'
 import PageNotFound from '../pages/PageNotFound';
 import PrivateRoutes from './PrivateRoutes'
 import AdminRoute from './AdminRoutes'
+import Header from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 
 
 const AppRoutes = () => {
     return (
         <Router>
-            <Routes>
-                {/* Public routes */}
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/bookDetail/:id" element={<BookDetail />} />
-                <Route path="/bookList" element={<BookList />} />
-                <Route path="/searchResult" element={<SearchResult />} />
+            <Header />
+                <Routes>
+                    {/* Public routes */}
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/bookDetail/:id" element={<BookDetail />} />
+                    <Route path="/bookList" element={<BookList />} />
+                    <Route path="/searchResult" element={<SearchResult />} />
 
-                {/* Private routes - validation add later*/}
-                <Route element={<PrivateRoutes />}>
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/orderHistory" element={<OrderHistory />} />
-                </Route>
+                    {/* Private routes - validation add later*/}
+                    <Route element={<PrivateRoutes />}>
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/orderHistory" element={<OrderHistory />} />
+                    </Route>
 
-                {/* admin Routing - valiation add later*/}
-                <Route element={<AdminRoute />}>
-                    <Route path="/dashBoard" element={<DashBoard />} />
-                    <Route path="/manageBooks" element={<ManageBooks />} />
-                </Route>
+                    {/* admin Routing - valiation add later*/}
+                    <Route element={<AdminRoute />}>
+                        <Route path="/dashBoard" element={<DashBoard />} />
+                        <Route path="/manageBooks" element={<ManageBooks />} />
+                    </Route>
 
-                <Route path="/*" element={<PageNotFound />} />
-            </Routes>
+                    <Route path="/*" element={<PageNotFound />} />
+                </Routes>
+                <Footer />
         </Router>
     )
 }
