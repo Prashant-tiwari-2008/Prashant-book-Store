@@ -2,17 +2,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Avatar, Button, Dropdown, DropdownDivider, DropdownItem, Navbar, TextInput, theme } from 'flowbite-react'
 import ThemeToggle from '../other/themeToggle'
 import { FaSearch } from "react-icons/fa";
-import { FaCartArrowDown } from "react-icons/fa";
 import logo from './../../../public/images/book-logo.jpeg'
 import { Link } from 'react-router-dom';
 import Cart from '../../pages/cart/Cart';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState();
-  let currentUser = {
-    name : "Prashant tiwari",
-    email : "prashanttiwari.vns@gamil.com"
-  };
+  const { currentUser } = useSelector(state => state.user);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
