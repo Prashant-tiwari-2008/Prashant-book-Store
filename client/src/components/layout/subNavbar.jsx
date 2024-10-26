@@ -13,8 +13,8 @@ const SubNavbar = () => {
             <Navbar.Link as={'div'}><Link to="/">Children</Link></Navbar.Link>
             <Navbar.Link as={'div'}><Link to="/">Comics & Graphic Novel</Link></Navbar.Link>
             <Navbar.Link as={'div'}><Link to="/">Comics & Graphic Novel</Link></Navbar.Link>
-            <Navbar.Link as={'div'}><Link to="/">Comics & Graphic Novel</Link></Navbar.Link>
-            <Navbar.Link as={'div'}><Link to="/">Languges</Link></Navbar.Link>
+            {/* <Navbar.Link as={'div'}><Link to="/">Comics & Graphic Novel</Link></Navbar.Link> */}
+            {/* <Navbar.Link as={'div'}><Link to="/">Languges</Link></Navbar.Link> */}
         </Navbar>
     </div>
   )

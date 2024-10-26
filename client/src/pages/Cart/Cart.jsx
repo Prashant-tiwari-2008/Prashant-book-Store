@@ -4,7 +4,7 @@ import { FaCartArrowDown } from "react-icons/fa";
 const Cart = () => {
   return (
     <div className='self-center' >
-      <FaCartArrowDown className='text-lg md:text-4xl'/>
+      <FaCartArrowDown className='md:text-4xl'/>
     </div>
   )
 }
