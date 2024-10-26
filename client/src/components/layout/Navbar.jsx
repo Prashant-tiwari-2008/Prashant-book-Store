@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Avatar, Button, Dropdown, DropdownDivider, DropdownItem, Navbar, TextInput, theme } from 'flowbite-react'
 import ThemeToggle from '../other/themeToggle'
 import { FaSearch } from "react-icons/fa";
-import logo from './../../../public/images/book-logo.jpeg'
+import logo from './../../../public/images/logo.png'
 import { Link } from 'react-router-dom';
 import Cart from '../../pages/cart/Cart';
 import { useSelector } from 'react-redux';
+import SubNavbar from './subNavbar';
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState();
@@ -21,16 +22,17 @@ const Header = () => {
   }
 
   return (
+    <>
     <Navbar className='border-b-2 w-full z-50 shadow-md shadow-teal-100'>
       <Link to="/" className='self-center whitespace-nowrap'>
-        <img src={logo} alt="logo" className='ml-5 p-1 h-9' />
+        <img src={logo} alt="logo" className='h-14' />
       </Link>
       <form onSubmit={handleSubmit} className='hidden lg:inline-block'>
         <TextInput
           type="text"
           placeholder='Search Book...'
           rightIcon={FaSearch}
-          className='w-96'
+          className='w-[42rem]'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -71,6 +73,8 @@ const Header = () => {
         <Cart />
       </div>
     </Navbar >
+    <SubNavbar/>
+    </>
   )
 }
 

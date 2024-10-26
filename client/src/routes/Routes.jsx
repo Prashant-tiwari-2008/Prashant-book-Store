@@ -23,6 +23,7 @@ const AppRoutes = () => {
     return (
         <Router>
             <Header />
+            <div className='md:container md:mx-auto'>
                 <Routes>
                     {/* Public routes */}
                     <Route path="/" element={<Home />} />
@@ -48,7 +49,8 @@ const AppRoutes = () => {
 
                     <Route path="/*" element={<PageNotFound />} />
                 </Routes>
-                <Footer />
+            </div>
+            <Footer />
         </Router>
     )
 }
