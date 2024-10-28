@@ -3,7 +3,7 @@ import bookSample from './../../assets/images/book-Sample.jpg'
 import WishlistButton from './WishlistButton';
 import CustomeButton from './Button';
 
-const BookCard = ({ Book }) => {
+const BookCard = ({ book }) => {
     return (
         <div className='max-w-[180px] max-h-[500px] h-[410px]'>
             <article className='mb-2.5 p-1.5 bg-transparent cursor-pointer border-[0.76px] border-[#bfbfbf] h-full rounded-md'>
