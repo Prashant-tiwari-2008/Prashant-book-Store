@@ -22,7 +22,7 @@ export const validateUserRegister = [
 export const validateBookCreation = [
     check('title', 'Title is required').notEmpty(),
     check('author', 'Author is required').notEmpty(),
-    check('price', 'Price must be a number').isNumeric(),
+    // check('price', 'Price must be a number').isNumeric(),
     // check('stock', 'Stock must be a number').isInt({ min: 0 }),
     // check('category', 'Category is required').notEmpty(),
 

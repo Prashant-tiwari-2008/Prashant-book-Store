@@ -3,7 +3,7 @@ import Book from '../models/Book.js';
 
 
 export const postBooks = async (req, res, next) => {
-    
+
     try {
         const books = req.body.books;
         if (!books || books.length === 0) {
@@ -40,12 +40,7 @@ export const getAllBooks = async (req, res, next) => {
         const startIndex = parseInt(req.query.startIndex) || 0;
         const limit = parseInt(req.query.limit) || 9;
         const sortDirection = req.query.sort === 'asc' ? 1 : -1;
-
-        const books = await Book.find()
-            .sort({ title: sortDirection, author: sortDirection }) // Sorting on indexed fields
-            .skip(startIndex)
-            .limit(limit)
-            .explain();
+        const books = await Book.find().sort({ title: sortDirection, author: sortDirection }).skip(startIndex).limit(limit);
 
         const totalBooks = await Book.countDocuments();
 
@@ -60,6 +55,36 @@ export const getAllBooks = async (req, res, next) => {
             errorHandler(400, 'Unknown error')
         }
 
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const getBestSellerByCategory = async (req, res, next) => {
+    try {
+        const { BisacCode } = req.query;
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const sortDirection = req.query.sort === 'asc' ? 1 : -1;
+
+        if (!BisacCode) {
+            return next(errorHandler(400, "Missing required 'BisacCode' parameter"));
+        }
+
+        const books = await Book.find({ BisacCode: { $regex: BisacCode, $options: "i" } })
+        .sort({ no_of_views: sortDirection })
+        .skip(startIndex)
+        .limit(limit);
+
+        if (books) {
+            res.status(200).json({
+                success: true,
+                statusCode: 200,
+                data: books
+            })
+        } else {
+            return errorHandler(400, "Unknow error")
+        }
     } catch (error) {
         next(error)
     }

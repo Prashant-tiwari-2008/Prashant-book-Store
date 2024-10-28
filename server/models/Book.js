@@ -3,10 +3,31 @@ import mongoose from "mongoose";
 // todo : review and category 
 const bookSchema = new mongoose.Schema(
     {
-        id: { type: String, required: true },
         title: { type: String, required: true, trim: true },
-        author: { type: String, required: true, trim: true },
-        ISBN: {
+        slug_field: { type: String },
+        ThumbnailURL: { type: String },
+        longdesc: { type: String },
+        PublishedLanguage: { type: String },
+        retail_price: { type: Number, required: true, min: [0, 'Price must be a positive value'] },
+        selling_price: { type: Number, required: true, min: [0, 'Price must be a positive value'] },
+        author: [{ type: String, required: true, trim: true }], // need to change to array of stirng
+        PublisherName_id: { type: String},
+        PublisherName_slug_field: { type: String },
+        sku: { type: String },
+        PublicationDate: { type: Date },
+        PublicationCountryLocation: { type: String },
+        availability: { type: String },
+        no_of_books: { type: Number },
+        PageCount : { type: Number, required: true, min: [0, 'pages must be a positive value'] },
+        Casing: { type: String },
+        BisacCode: { type: String },
+        discount_ranges: { type: String },
+        price_range: { type: String },
+        discount: { type: Number },
+        no_of_views: { type: Number },
+        groups: [{type : String}],
+        availability: { type: String },
+         ISBN: {
             type: String, unique: true, trim: true,
             validate: {
                 validator: function (v) {
@@ -31,7 +52,6 @@ const bookSchema = new mongoose.Schema(
         // }],
         publisher: { type: String, trim: true },
         publicationDate: { type: Date, default: Date.now },
-        price: { type: Number, required: true, min: [0, 'Price must be a positive value'] },
         quantityInStock: { type: Number, default: 0, min: [0, 'Stock cannot be negative'] },
         description: { type: String, trim: true },
         imageUrl: { type: String, trim: true }
