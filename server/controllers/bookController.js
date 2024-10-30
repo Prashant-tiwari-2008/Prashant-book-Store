@@ -21,7 +21,6 @@ export const postBooks = async (req, res, next) => {
 }
 
 export const postBook = async (req, res, next) => {
-    console.log("inside the postBook")
     try {
         const newBook = new Book(req.body)
         const savedBook = await newBook.save()
@@ -72,9 +71,9 @@ export const getBestSellerByCategory = async (req, res, next) => {
         }
 
         const books = await Book.find({ BisacCode: { $regex: BisacCode, $options: "i" } })
-        .sort({ no_of_views: sortDirection })
-        .skip(startIndex)
-        .limit(limit);
+            .sort({ no_of_views: sortDirection })
+            .skip(startIndex)
+            .limit(limit);
 
         if (books) {
             res.status(200).json({
@@ -87,6 +86,47 @@ export const getBestSellerByCategory = async (req, res, next) => {
         }
     } catch (error) {
         next(error)
+    }
+}
+
+export const getFilterOptions = async (req, res, next) => {
+    try {
+        const { BisacCode } = req.query;
+        if (!BisacCode) {
+            return errorHandler(400, "BisacCode is missing in query parameter");
+        }
+        const [Author, Publisher, Discount, Language, Casing,gen] = await Promise.all([
+            Book.distinct('author', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
+            Book.distinct('publisher', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
+            Book.distinct('discount_ranges', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
+            Book.distinct('PublishedLanguage', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
+            Book.distinct('Casing', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
+            Book.distinct('BisacCode', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }), // for Ref
+        ])
+        const price_range = [
+            { label: 'Under ₹10', min: 0, max: 10 },
+            { label: '₹10 - ₹20', min: 10, max: 20 },
+            { label: '₹20 - ₹30', min: 20, max: 30 },
+            { label: 'Above ₹30', min: 30, max: Infinity }
+        ]
+
+        res.status(200).json({
+            statusCode: 200,
+            success: true,
+            data: {
+                price_range,
+                Author,
+                Publisher,
+                Discount,
+                Language,
+                Casing,
+                gen
+            }
+
+        })
+
+    } catch (error) {
+        next(error);
     }
 }
 
