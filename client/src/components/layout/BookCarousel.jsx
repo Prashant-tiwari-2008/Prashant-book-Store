@@ -19,8 +19,8 @@ const BookCarousel = ({ title, books }) => {
                 modules={[FreeMode,Navigation]}
                 className='mySwiper'
             >
-                {books && books.map((book) => (
-                    <SwiperSlide><BookCard book={book} /></SwiperSlide>
+                {books && books.map((book,index) => (
+                    <SwiperSlide key={index}><BookCard book={book} /></SwiperSlide>
                 )
                 )}
             </Swiper>
