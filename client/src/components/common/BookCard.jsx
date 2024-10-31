@@ -1,9 +1,11 @@
 import React from 'react'
 import bookSample from './../../assets/images/book-Sample.jpg'
 import WishlistButton from './WishlistButton';
+import { Tooltip } from "flowbite-react";
 import CustomeButton from './Button';
 
 const BookCard = ({ book }) => {
+    console.log(book)
     return (
         <div className='max-w-[210px] max-h-[500px] h-[410px]'>
             <article className='mb-2.5 p-1.5 bg-transparent cursor-pointer border-[0.76px] border-[#bfbfbf] h-full rounded-md'>
@@ -13,13 +15,14 @@ const BookCard = ({ book }) => {
                     </div>
                 </div>
                 <div className='mt-1 flex flex-col pl-1'>
-                    <h4 className='font-[700] text-lg'>{book.title.slice(0,12) + '...'}</h4>
-                    {/* <h4 className='font-[700] text-lg'>{book.title}</h4> */}
+                    <Tooltip content={book.title} placement="top">
+                        <h5 className='font-[700] text-lg'>{book.title.slice(0, 14) + '...'}</h5>
+                    </Tooltip>
                     <p className='font-semibold'>{book.author[0] || "dummy author"}</p>
                     <div className='flex gap-2 mt-1 text-lg'>
                         <div className='font-[700]'><span>₹{book.selling_price}</span></div>
                         <div className='line-through'><span>₹{book.retail_price}</span></div>
-                        <div><span>{(book.discount)}</span></div>
+                        <div><span>({(book.discount)}%)</span></div>
                     </div>
                 </div>
                 <div className='mt-2'>

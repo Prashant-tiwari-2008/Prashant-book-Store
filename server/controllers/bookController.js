@@ -95,33 +95,31 @@ export const getFilterOptions = async (req, res, next) => {
         if (!BisacCode) {
             return errorHandler(400, "BisacCode is missing in query parameter");
         }
-        const [Author, Publisher, Discount, Language, Casing,gen] = await Promise.all([
-            Book.distinct('author', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
-            Book.distinct('publisher', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
-            Book.distinct('discount_ranges', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
-            Book.distinct('PublishedLanguage', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
-            Book.distinct('Casing', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }),
-            Book.distinct('BisacCode', { BisacCode: { $regex: new RegExp(BisacCode, 'i') } }), // for Ref
-        ])
-        const price_range = [
-            { label: 'Under ₹10', min: 0, max: 10 },
-            { label: '₹10 - ₹20', min: 10, max: 20 },
-            { label: '₹20 - ₹30', min: 20, max: 30 },
-            { label: 'Above ₹30', min: 30, max: Infinity }
-        ]
 
+        // Prepare case-insensitive regex for BisacCode matching
+        const bisacCodeRegex = new RegExp(BisacCode, 'i');
+        const [Author, Publisher, Discount, Language, Casing] = await Promise.all([
+            Book.distinct('author', { BisacCode: bisacCodeRegex }),
+            Book.distinct('publisher', { BisacCode: bisacCodeRegex }),
+            Book.distinct('discount_ranges', { BisacCode: bisacCodeRegex }),
+            Book.distinct('PublishedLanguage', { BisacCode: bisacCodeRegex }),
+            Book.distinct('Casing', { BisacCode: bisacCodeRegex })
+        ])
+
+        const price_range = [
+            "0 - 500", "501 - 1000", "1001 - 1500", "1501 - 5000"
+        ]
         res.status(200).json({
             statusCode: 200,
             success: true,
-            data: {
-                price_range,
-                Author,
-                Publisher,
-                Discount,
-                Language,
-                Casing,
-                gen
-            }
+            data: [
+                { label: "Price", value: price_range },
+                { label: "Author", value: Author },
+                { label: "Publisher", value: Publisher },
+                { label: "Discount", value: Discount },
+                { label: "Language", value: Language },
+                { label: "Casing", value: Casing },
+            ]
 
         })
 

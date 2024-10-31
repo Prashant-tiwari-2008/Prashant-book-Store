@@ -14,3 +14,40 @@ installed Package
 5. flowbite-react
 6. React query/tanStack query
 7. react-circular-progressbar
+
+
+/Ref value for category/gen/BisacCode
+      "gen": [
+            "FICTION / Action & Adventure",
+            "FICTION / Alternative History",
+            "FICTION / Classics",
+            "FICTION / Fantasy / General",
+            "FICTION / Fantasy / Military",
+            "FICTION / General",
+            "FICTION / Literary",
+            "FICTION / Romance / Fantasy",
+            "FICTION / Romance / Paranormal",
+            "FICTION / Romance / Paranormal / Vampires",
+            "FICTION / Short Stories (single author)",
+            "JUVENILE FICTION / Comics & Graphic Novels / General",
+            "JUVENILE FICTION / Family / General (see also headings under Social Issues)",
+            "JUVENILE FICTION / Fantasy & Magic",
+            "JUVENILE FICTION / General",
+            "JUVENILE FICTION / Humorous Stories",
+            "JUVENILE NONFICTION / Comics & Graphic Novels / Science & Nature",
+            "JUVENILE NONFICTION / Games & Activities / Puzzles",
+            "YOUNG ADULT FICTION / Action & Adventure / Survival Stories",
+            "YOUNG ADULT FICTION / Books & Libraries",
+            "YOUNG ADULT FICTION / Comics & Graphic Novels / Manga",
+            "YOUNG ADULT FICTION / Family / Siblings",
+            "YOUNG ADULT FICTION / Genera",
+            "YOUNG ADULT FICTION / Romance / Clean & Wholesome",
+            "YOUNG ADULT FICTION / Romance / Contemporary",
+            "YOUNG ADULT FICTION / Romance / General",
+            "YOUNG ADULT FICTION / Romance / Historical",
+            "YOUNG ADULT FICTION / Romance / Multicultural & Interracial",
+            "YOUNG ADULT FICTION / Romance / Romantic Comedy",
+            "Young Adult Fiction / Action & Adventure ; Young Adult Fiction / Fantasy / Wizards & Witches ; Young Adult Fiction / Action & Adventure / Survival Stories",
+            "Young Adult Fiction | Romance | Contemporary",
+            "Young Adult Nonfiction | Biography & Autobiography | Cultural Ethnic & Regional ; Young Adult Nonfiction | People & Places | Africa"
+        ]

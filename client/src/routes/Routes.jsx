@@ -30,7 +30,7 @@ const AppRoutes = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/bookDetail/:id" element={<BookDetail />} />
-                    <Route path="/bookList" element={<BookList />} />
+                    <Route path="/bookList/:category" element={<BookList />} />
                     <Route path="/searchResult" element={<SearchResult />} />
 
                     {/* Private routes - validation add later*/}
