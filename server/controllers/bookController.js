@@ -34,12 +34,45 @@ export const postBook = async (req, res, next) => {
     }
 }
 
-export const getAllBooks = async (req, res, next) => {
+export const getBooks = async (req, res, next) => {
     try {
-        const startIndex = parseInt(req.query.startIndex) || 0;
-        const limit = parseInt(req.query.limit) || 9;
-        const sortDirection = req.query.sort === 'asc' ? 1 : -1;
-        const books = await Book.find().sort({ title: sortDirection, author: sortDirection }).skip(startIndex).limit(limit);
+        const { BisacCode, Price, Author, Publisher, Discount, Language, Casing, startIndex, limit, sort } = req.query;
+
+        const startIndexValuee = parseInt(startIndex) || 0;
+        const limitValue = parseInt(limit) || 15;
+        const sortDirection = sort === 'asc' ? 1 : -1;
+
+        // Initialize filter object
+        const filters = {};
+
+        const bisacCodeRegex = new RegExp(BisacCode, 'i');
+        filters.BisacCode = bisacCodeRegex
+        if (Price) {
+            const [minPrice, maxPrice] = Price.split('-').map(Number);
+            filters.selling_price = { $gte: minPrice, $lte: maxPrice }
+        }
+
+        if (Author) {
+            filters.author = { $in: Author.split(",").map(a => a.trim()) };
+        }
+
+        if (Publisher) {
+            filters.publisher = { $in: Publisher.split(",").map(a => a.trim()) };
+        }
+
+        if (Discount) {
+            filters.discount_ranges = Discount;
+        }
+
+        if (Language) {
+            filters.PublishedLanguage = Language;
+        }
+
+        if (Casing) {
+            filters.Casing = Casing;
+        }
+
+        const books = await Book.find(filters).sort({ title: sortDirection, author: sortDirection }).skip(startIndexValuee).limit(limitValue);
 
         const totalBooks = await Book.countDocuments();
 

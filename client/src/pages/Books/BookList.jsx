@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import BookListSidebar from '../../components/layout/Sidebar'
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetchBooks, fetchFilterConfig } from '../../services/bookService';
+import { fetchBooks, fetchFilterConfig, fetchBooks1 } from '../../services/bookService';
 import Loader from '../../components/common/Loader';
 import BookCard from '../../components/common/BookCard';
 
 const BookList = () => {
   const { category } = useParams();
+  const [filterOption, setFilterOption] = useState({ BisacCode: category });
+
   const { isPending: filterPending, isError: isFilterError, data: filterConfigData, error: filtererror } = useQuery({ queryKey: ['filterConfig', category], queryFn: () => fetchFilterConfig(category), staleTime: 600000, })
-  const { isPending, isError, data, error } = useQuery({ queryKey: ['bookData', category], queryFn: () => fetchBooks(category, 0, 15), staleTime: 600000, })
-  const [filterOption, setFilterOption] = useState({});
+  const { isPending, isError, data, error } = useQuery({ queryKey: ['bookData', filterOption], queryFn: () => fetchBooks(filterOption, 0, 15), staleTime: 600000, })
 
   const Error = ({ message }) => <p>Error: {message}</p>;
 
@@ -34,8 +35,6 @@ const BookList = () => {
     })
   }
 
-  console.log(filterOption,"filterOPtion")
-
   return (
     <div className='flex flex-col lg:flex-row my-10 gap-5'>
       <div className='w-full lg:w-1/4'>
@@ -50,7 +49,7 @@ const BookList = () => {
           <div className='flex justify-center items-center my-5'> <Loader /></div> : isError ?
             <Error message={error.message} /> :
             <>
-              {data && data.map((book,index) => (
+              {data && data.map((book, index) => (
                 <BookCard key={index} book={book} />
               ))}
             </>

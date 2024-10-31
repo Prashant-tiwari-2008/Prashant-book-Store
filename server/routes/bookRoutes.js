@@ -1,5 +1,5 @@
 import express from 'express';
-import { postBook, postBooks, getAllBooks, getSingleBook, UpdateBook, deleteBook, searchBooks, getBestSellerByCategory, getFilterOptions } from '../controllers/bookController.js';
+import { postBook, postBooks, getBooks, getSingleBook, UpdateBook, deleteBook, searchBooks, getBestSellerByCategory, getFilterOptions } from '../controllers/bookController.js';
 import { validateSellerRole } from '../middleware/adminMiddleware.js';
 import { validateToken } from '../middleware/authMiddleware.js';
 import { validateBookCreation } from '../middleware/validationMiddleware.js';
@@ -7,7 +7,7 @@ import { validateBookCreation } from '../middleware/validationMiddleware.js';
 
 const routes = express.Router();
 //public routes
-routes.get("/", getAllBooks);
+routes.get("/", getBooks);
 routes.get("/getBestSellerByCategory", getBestSellerByCategory)
 routes.get("/filters", getFilterOptions)
 routes.get("/:id", getSingleBook);
