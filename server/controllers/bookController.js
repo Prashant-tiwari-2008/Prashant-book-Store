@@ -42,13 +42,21 @@ export const getBooks = async (req, res, next) => {
         const limitValue = parseInt(limit) || 15;
         const sortDirection = sort === 'asc' ? 1 : -1;
 
-        // Initialize filter object
         const filters = {};
 
         const bisacCodeRegex = new RegExp(BisacCode, 'i');
         filters.BisacCode = bisacCodeRegex
+
+        // add multiple price selection code
+        //  
         if (Price) {
-            const [minPrice, maxPrice] = Price.split('-').map(Number);
+            let minPrice = 0;
+            let maxPrice = 0
+            Price.split(",").map((a) => {
+                let [t2, t3] = a.split('-');
+                minPrice = Math.min(t2, minPrice);
+                maxPrice = Math.max(t3, maxPrice)
+            });
             filters.selling_price = { $gte: minPrice, $lte: maxPrice }
         }
 
@@ -65,11 +73,11 @@ export const getBooks = async (req, res, next) => {
         }
 
         if (Language) {
-            filters.PublishedLanguage = Language;
+            filters.PublishedLanguage = { $in: Language.split(",").map(a => a.trim()) };
         }
 
         if (Casing) {
-            filters.Casing = Casing;
+            filters.Casing = { $in: Casing.split(",").map(a => a.trim()) };
         }
 
         const books = await Book.find(filters).sort({ title: sortDirection, author: sortDirection }).skip(startIndexValuee).limit(limitValue);

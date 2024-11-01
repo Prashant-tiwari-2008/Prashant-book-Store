@@ -1,0 +1,21 @@
+.breadcrumb {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    margin-top: 2rem;
+    font-size: large;
+    font-weight: 600;
+}
+
+.breadcrumb li {
+    display: inline;
+}
+
+.breadcrumb li::after {
+    content: '>';
+    margin: 0 0.5rem;
+}
+
+.breadcrumb li:last-child::after {
+    content: '';
+}

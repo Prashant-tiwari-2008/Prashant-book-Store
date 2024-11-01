@@ -26,7 +26,7 @@ const BookCard = ({ book }) => {
                     </div>
                 </div>
                 <div className='mt-2'>
-                    <div className='flex gap-2'>
+                    <div className='flex gap-4'>
                         <WishlistButton />
                         <CustomeButton title={'Add To Cart'} />
                     </div>

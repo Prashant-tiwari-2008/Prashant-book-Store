@@ -17,6 +17,7 @@ import PrivateRoutes from './PrivateRoutes'
 import AdminRoute from './AdminRoutes'
 import Header from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
 
 
 const AppRoutes = () => {
@@ -24,6 +25,7 @@ const AppRoutes = () => {
         <Router>
             <Header />
             <div className='md:container md:mx-auto'>
+                <Breadcrumbs />
                 <Routes>
                     {/* Public routes */}
                     <Route path="/" element={<Home />} />
