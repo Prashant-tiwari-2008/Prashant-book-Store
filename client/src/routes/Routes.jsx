@@ -18,6 +18,7 @@ import AdminRoute from './AdminRoutes'
 import Header from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Breadcrumbs from '../components/layout/Breadcrumbs';
+import WishlistPage from '../pages/User/WishlistPage';
 
 
 const AppRoutes = () => {
@@ -38,6 +39,7 @@ const AppRoutes = () => {
                     {/* Private routes - validation add later*/}
                     <Route element={<PrivateRoutes />}>
                         <Route path="/cart" element={<Cart />} />
+                        <Route path="/wishlist" element={<WishlistPage />} />
                         <Route path="/checkout" element={<Checkout />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/orderHistory" element={<OrderHistory />} />

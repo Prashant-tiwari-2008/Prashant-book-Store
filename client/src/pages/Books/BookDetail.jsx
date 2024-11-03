@@ -78,7 +78,7 @@ const BookDetail = () => {
                     <div className="flex flex-col">
                       <div className='shadow-lg p-3 dark:shadow-cyan-500/50 '>
                         <div className='float-left absolute '>
-                          <WishlistButton />
+                          <WishlistButton book={book} />
                         </div>
                         <img src={book.ThumbnailURL} />
                       </div>
@@ -157,7 +157,7 @@ const BookDetail = () => {
                     </div>
 
                   </div>
-                  
+
                   {/* vertical line */}
                   <div class="h-auto w-[2px] bg-gray-200 border-0 dark:bg-gray-700 mx-4"></div>
 

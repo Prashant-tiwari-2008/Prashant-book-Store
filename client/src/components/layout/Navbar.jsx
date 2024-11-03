@@ -68,7 +68,7 @@ const Header = () => {
               <Button title={"log In"} />
             </Link>)
           }
-
+          <Link to="/wishlist">WIsh</Link>
           <Cart />
         </div>
       </Navbar >
