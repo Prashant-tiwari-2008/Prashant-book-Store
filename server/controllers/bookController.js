@@ -36,28 +36,26 @@ export const postBook = async (req, res, next) => {
 
 export const getBooks = async (req, res, next) => {
     try {
-        const { BisacCode, Price, Author, Publisher, Discount, Language, Casing, startIndex, limit, sort } = req.query;
+        const { BisacCode, Price, Author, Publisher, Discount, Language, Casing, currentPage, sort } = req.query;
 
-        const startIndexValuee = parseInt(startIndex) || 0;
-        const limitValue = parseInt(limit) || 15;
+        //Pagination value - can be dynamic
+        const page = parseInt(currentPage, 10) || 1;
+        const limit = 15;
+        const skip = (page - 1) * limit
         const sortDirection = sort === 'asc' ? 1 : -1;
 
         const filters = {};
 
         const bisacCodeRegex = new RegExp(BisacCode, 'i');
-        filters.BisacCode = bisacCodeRegex
+        if (BisacCode) {
+            filters.BisacCode = bisacCodeRegex
+        }
 
-        // add multiple price selection code
-        //  
         if (Price) {
-            let minPrice = 0;
-            let maxPrice = 0
-            Price.split(",").map((a) => {
-                let [t2, t3] = a.split('-');
-                minPrice = Math.min(t2, minPrice);
-                maxPrice = Math.max(t3, maxPrice)
-            });
-            filters.selling_price = { $gte: minPrice, $lte: maxPrice }
+            let priceRanges = Price.split(",").map(range => range.split('-').map(Number));
+            let minPrice = Math.min(...priceRanges.map(([min]) => min));
+            let maxPrice = Math.max(...priceRanges.map(([, max]) => max));
+            filters.selling_price = { $gte: minPrice, $lte: maxPrice };
         }
 
         if (Author) {
@@ -79,12 +77,10 @@ export const getBooks = async (req, res, next) => {
         if (Casing) {
             filters.Casing = { $in: Casing.split(",").map(a => a.trim()) };
         }
+        const books = await Book.find(filters).sort({ title: sortDirection, author: sortDirection }).skip(skip).limit(limit);
+        const totalBooks = await Book.countDocuments(filters);
 
-        const books = await Book.find(filters).sort({ title: sortDirection, author: sortDirection }).skip(startIndexValuee).limit(limitValue);
-
-        const totalBooks = await Book.countDocuments();
-
-        if (books) {
+        if (books.length > 0) {
             res.status(200).json({
                 success: true,
                 statusCode: 200,
@@ -92,7 +88,11 @@ export const getBooks = async (req, res, next) => {
                 totalBooks
             })
         } else {
-            errorHandler(400, 'Unknown error')
+            res.status(404).json({
+                success: false,
+                statusCode: 404,
+                message: "No books found matching the criteria"
+            });
         }
 
     } catch (error) {

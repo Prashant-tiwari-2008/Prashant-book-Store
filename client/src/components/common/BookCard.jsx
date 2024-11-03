@@ -1,8 +1,8 @@
 import React from 'react'
-import bookSample from './../../assets/images/book-Sample.jpg'
 import WishlistButton from './WishlistButton';
 import { Tooltip } from "flowbite-react";
 import CustomeButton from './Button';
+import { Link } from 'react-router-dom';
 
 const BookCard = ({ book }) => {
 
@@ -10,9 +10,11 @@ const BookCard = ({ book }) => {
         <div className='max-w-[210px] max-h-[500px] h-[410px]'>
             <article className='mb-2.5 p-1.5 bg-transparent cursor-pointer border-[0.76px] border-[#bfbfbf] h-full rounded-md'>
                 <div className='relative p-1 !pb-0'>
-                    <div aria-hidden="true" className='flex items-center justify-center max-h-[300px] min-h-[200px] overflow-hidden cursor-pointer'>
-                        <img src={book.ThumbnailURL} className='h-[250px] w-[190px]' />
-                    </div>
+                    <Link to={`/bookDetail/${book._id}`} >
+                        <div aria-hidden="true" className='flex items-center justify-center max-h-[300px] min-h-[200px] overflow-hidden cursor-pointer'>
+                            <img src={book.ThumbnailURL} className='h-[250px] w-[190px]' />
+                        </div>
+                    </Link>
                 </div>
                 <div className='mt-1 flex flex-col pl-1'>
                     <Tooltip content={book.title} placement="top">

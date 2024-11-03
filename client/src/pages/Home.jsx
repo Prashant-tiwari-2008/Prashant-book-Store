@@ -23,11 +23,11 @@ const Home = () => {
     <div>
       <Banner />
       {CATEGORIES.map(({ key, label, category }) => {
-        const { isPending, isError, data, error } = useQuery({ queryKey: [key], queryFn: () => fetchBooks({ BisacCode: category }, 0, 9) });
+        const { isPending, isError, data, error } = useQuery({ queryKey: [key], queryFn: () => fetchBooks({ BisacCode: category }, 1) });
 
         if (isPending) return <div key={key} className='flex justify-center items-center my-5'> <Loader /></div>
         if (isError) return <Error key={key} message={error.message} />
-        return data && <BookCarousel key={key} title={label} books={data} category={category} />;
+        return data && <BookCarousel key={key} title={label} books={data.data} category={category} />;
       })}
     </div>
   )

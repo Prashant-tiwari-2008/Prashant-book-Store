@@ -9,10 +9,11 @@ import BookPagination from '../../components/common/Pagination';
 
 const BookList = () => {
   const { category } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
   const [filterOption, setFilterOption] = useState({ BisacCode: category });
 
   const { isPending: filterPending, isError: isFilterError, data: filterConfigData, error: filtererror } = useQuery({ queryKey: ['filterConfig', category], queryFn: () => fetchFilterConfig(category), staleTime: 600000, })
-  const { isPending, isError, data, error } = useQuery({ queryKey: ['bookData', filterOption], queryFn: () => fetchBooks(filterOption, 0, 15), staleTime: 600000, })
+  const { isPending, isError, data, error } = useQuery({ queryKey: ['bookData', filterOption, currentPage], queryFn: () => fetchBooks(filterOption, currentPage), staleTime: 600000, })
 
   const Error = ({ message }) => <p>Error: {message}</p>;
 
@@ -51,14 +52,14 @@ const BookList = () => {
             <div className='flex justify-center items-center my-5'> <Loader /></div> : isError ?
               <Error message={error.message} /> :
               <>
-                {data && data.map((book, index) => (
+                {data.data && data.data.map((book, index) => (
                   <BookCard key={index} book={book} />
                 ))}
               </>
           }
         </div>
       </div>
-      <BookPagination className="float-left"/>
+      {data && <BookPagination className="float-left" totalLength={data.totalBooks} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
     </>
   )
 }

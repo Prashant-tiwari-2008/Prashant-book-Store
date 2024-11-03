@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button } from 'flowbite-react'
 
-const CustomeButton = ({ title }) => {
+const CustomeButton = ({ title, handleClick, disable }) => {
     return (
-        <Button gradientDuoTone='purpleToBlue' outline>
+        <Button gradientDuoTone='purpleToBlue' onClick={handleClick} outline disabled={disable || false}>
             {title}
         </Button>
     )

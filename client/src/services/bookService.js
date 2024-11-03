@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const fetchBooks = async (filterOption, startIndex, limit) => {
+export const fetchBooks = async (filterOption, currentPage) => {
     try {
         const flattenedOptions = {};
         for (const [key, value] of Object.entries(filterOption)) {
@@ -12,12 +12,12 @@ export const fetchBooks = async (filterOption, startIndex, limit) => {
         }
         const params = new URLSearchParams(flattenedOptions);
         const queryString = params.toString();
-        let url = `http://localhost:4001/api/v1/book?${queryString}`
+        let url = `http://localhost:4001/api/v1/book?${queryString}&currentPage=${currentPage || 1}`
 
         console.log(url, "final url")
         let response = await axios.get(url);
         if (response.data.success) {
-            return response.data.data;
+            return response.data;
         } else {
             console.log("error in fetching the response")
         }
@@ -27,6 +27,20 @@ export const fetchBooks = async (filterOption, startIndex, limit) => {
     }
 }
 
+export const fetchBook = async (BookId) => {
+    try {
+        let url = `http://localhost:4001/api/v1/book/${BookId}`;
+        const response = await axios.get(url);
+        if (response.data.success) {
+            return response.data.data;
+        } else {
+            console.log("Error in fetch the response")
+        }
+    } catch (error) {
+        console.log(error, "error")
+        throw error;
+    }
+}
 
 export const fetchFilterConfig = async (category) => {
     try {
