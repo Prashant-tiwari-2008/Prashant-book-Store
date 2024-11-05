@@ -12,14 +12,14 @@ export const register = async (req, res, next) => {
         const existingUser = await User.findOne({ email })
         if (existingUser) {
             return res.status(409).json({
-                success: true,
+                success: false,
                 statusCode: 409,
                 message: "Email is alreday in use!, Please Login"
             })
         }
         if (role === 'admin') {
             return res.status(409).json({
-                success: true,
+                success: false,
                 statusCode: 409,
                 message: "You can not assign admin role"
             })
@@ -66,6 +66,18 @@ export const login = async (req, res, next) => {
             success: true,
             statusCode: 200,
             data: userWithoutPassword
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const verifyToken = async (req, res, next) => {
+    try {
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            message: "Token is valid"
         })
     } catch (error) {
         next(error)

@@ -34,7 +34,7 @@ const userSchema = new mongose.Schema(
             }
         },
         phoneNumber: {
-            type: Number, required: true,
+            type: Number,
             validate: {
                 validator: function (v) {
                     return /^(?:(?:\+91|0)?[7-9][0-9]{9})$/.test(v);
@@ -66,6 +66,10 @@ userSchema.pre('save', async function (next) {
         next(error)
     }
 })
+
+// todo : need to add virtual function to get full name
+// todo : need to add wishlist option
+// todo : need to add cart option
 
 // Add an instance method to compare passwords
 userSchema.methods.comparePassword = async function (condidatePassword) {

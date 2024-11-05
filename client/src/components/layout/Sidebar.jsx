@@ -12,7 +12,6 @@ const BookListSidebar = ({ filterConfig, filterOption, onFilterChange }) => {
                             {filter.value.map((option, index) => {
                                 const optionId = `${option}-${index}`;
                                 const isChecked = filterOption[filter.label]?.includes(option);
-
                                 return (
                                     <Sidebar.Item key={optionId} className="flex justify-start items-center gap-2 pl-4">
                                         <Checkbox id={optionId} className='text-center' onChange={() => onFilterChange(filter.label, option)} checked={isChecked}/>

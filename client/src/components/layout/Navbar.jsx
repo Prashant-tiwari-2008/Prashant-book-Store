@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Avatar, Dropdown, DropdownDivider, DropdownItem, Navbar, TextInput, theme } from 'flowbite-react'
 import ThemeToggle from '../other/themeToggle'
-import { FaSearch } from "react-icons/fa";
+import { FaCartArrowDown, FaDribbble, FaSearch } from "react-icons/fa";
 import logo from './../../../public/images/logo.png'
 import { Link } from 'react-router-dom';
 import Cart from '../../pages/cart/Cart';
@@ -38,7 +38,7 @@ const Header = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </form>
-        <div className='flex gap-3 md:order-2'>
+        <div className='flex gap-4 md:order-2'>
           <ThemeToggle />
           {currentUser ?
             (
@@ -46,7 +46,10 @@ const Header = () => {
                 arrowIcon={false}
                 inline
                 label={
-                  <Avatar alt="User" img={logo} rounded bordered color='success' status="online" size="md" />
+                  // <Avatar alt="User" img={logo} rounded bordered color='success' status="online" size="md" />
+                  <div className='border-[1px] border-teal-100 rounded-full w-[60px]'>
+                    <h1 className='font-bold text-3xl self-center'>P</h1>  {/* // todo : either user Image or the first letter of name */}
+                  </div>
                 }
               >
                 <Dropdown.Header>
@@ -68,8 +71,12 @@ const Header = () => {
               <Button title={"log In"} />
             </Link>)
           }
-          <Link to="/wishlist">WIsh</Link>
-          <Cart />
+          <Link to="/cart">
+            <FaCartArrowDown className='md:text-4xl' />
+          </Link>
+          <Link to="/wishlist">
+            <p>W</p>
+          </Link>
         </div>
       </Navbar >
       <SubNavbar />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from '../pages/Home';
 import DashBoard from '../pages/Admin/Dashboard'
 import ManageBooks from '../pages/Admin/ManageBooks'
@@ -19,19 +19,27 @@ import Header from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Breadcrumbs from '../components/layout/Breadcrumbs';
 import WishlistPage from '../pages/User/WishlistPage';
+import NonLoggedInRoutes from './NonLoggedInRoutes';
 
 
 const AppRoutes = () => {
+    const location = useLocation();
+    const hideHeaderAndBreadcrumbsAndFooter = location.pathname === '/login' || location.pathname === "/register"
+
     return (
-        <Router>
-            <Header />
+        <>
+            {!hideHeaderAndBreadcrumbsAndFooter && <Header />}
             <div className='md:container md:mx-auto'>
-                <Breadcrumbs />
+                {!hideHeaderAndBreadcrumbsAndFooter && <Breadcrumbs />}
                 <Routes>
+                    {/*NonLoggedInRoutes  */}
+                    <Route element={<NonLoggedInRoutes />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                    </Route>
+
                     {/* Public routes */}
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
                     <Route path="/bookDetail/:bookId" element={<BookDetail />} />
                     <Route path="/bookList/:category" element={<BookList />} />
                     <Route path="/searchResult" element={<SearchResult />} />
@@ -54,8 +62,8 @@ const AppRoutes = () => {
                     <Route path="/*" element={<PageNotFound />} />
                 </Routes>
             </div>
-            <Footer />
-        </Router>
+            {!hideHeaderAndBreadcrumbsAndFooter && <Footer />}
+        </>
     )
 }
 

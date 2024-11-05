@@ -22,15 +22,19 @@ const PORT = process.env.PORT || 4000;
 //add middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173', // Frontend origin
+    credentials: true // Allow cookies
+}));
 app.use(cookieParser());
-app.use(limiter);
+// app.use(limiter);
 
 
 app.use("/api/v1/auth", authRoutes)
 app.use("/api/v1/user", userRoutes)
 app.use("/api/v1/book", bookRoutes)
-app.use("/api/v1/order",validateToken, orderRoutes)
+app.use("/api/v1/order", validateToken, orderRoutes)
 
 //Fallback for unmatched routes (404)
 app.use((req, res) => {

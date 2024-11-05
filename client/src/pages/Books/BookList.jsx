@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BookListSidebar from '../../components/layout/Sidebar'
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -10,10 +10,14 @@ import BookPagination from '../../components/common/Pagination';
 const BookList = () => {
   const { category } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterOption, setFilterOption] = useState({ BisacCode: category });
+  const [filterOption, setFilterOption] = useState();
 
+  useEffect(() => {
+    setFilterOption({ BisacCode: category })
+  }, [category])
+  
   const { isPending: filterPending, isError: isFilterError, data: filterConfigData, error: filtererror } = useQuery({ queryKey: ['filterConfig', category], queryFn: () => fetchFilterConfig(category), staleTime: 600000, })
-  const { isPending, isError, data, error } = useQuery({ queryKey: ['bookData', filterOption, currentPage], queryFn: () => fetchBooks(filterOption, currentPage), staleTime: 600000, })
+  const { isPending, isError, data, error } = useQuery({ queryKey: ['bookData', category, filterOption, currentPage], queryFn: () => fetchBooks(filterOption, currentPage), staleTime: 600000, })
 
   const Error = ({ message }) => <p>Error: {message}</p>;
 
@@ -47,9 +51,9 @@ const BookList = () => {
               <BookListSidebar filterConfig={filterConfigData} filterOption={filterOption} onFilterChange={onFilterChange} />
           }
         </div>
-        <div className='flex justify-start flex-wrap gap-8'>
+        <div className='flex justify-start flex-wrap gap-8 w-full h-full'>
           {isPending ?
-            <div className='flex justify-center items-center my-5'> <Loader /></div> : isError ?
+            <div className='flex justify-center items-center my-5 w-full h-full'> <Loader /></div> : isError ?
               <Error message={error.message} /> :
               <>
                 {data.data && data.data.map((book, index) => (

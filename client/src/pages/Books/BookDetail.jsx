@@ -59,9 +59,7 @@ const BookDetail = () => {
   const decQuantity = () => {
     setQuantity(prev => prev - 1)
   }
-  // todo : 
-  // 1. add horizantal line
-  // 2. add vertical line
+
   return (
     <div className='my-5'>
       {isPending ?

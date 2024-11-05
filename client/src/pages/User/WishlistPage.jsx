@@ -6,7 +6,7 @@ const WishlistPage = () => {
     const { items: wishlistItems } = useSelector((state) => state.wishlist);
 
     return (
-        <div className='flex flex-col gap-8'>
+        <div className='flex flex-col gap-8 mt-10'>
             <div className='text-center'>
                 <h1 className='font-bold text-4xl'>Wishlist</h1>
                 <p>{wishlistItems?.length || 0} items</p>

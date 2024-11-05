@@ -13,8 +13,7 @@ export const fetchBooks = async (filterOption, currentPage) => {
         const params = new URLSearchParams(flattenedOptions);
         const queryString = params.toString();
         let url = `http://localhost:4001/api/v1/book?${queryString}&currentPage=${currentPage || 1}`
-
-        console.log(url, "final url")
+        
         let response = await axios.get(url);
         if (response.data.success) {
             return response.data;

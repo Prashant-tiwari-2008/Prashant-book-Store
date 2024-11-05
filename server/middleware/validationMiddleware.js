@@ -1,10 +1,10 @@
 import { check, validationResult } from 'express-validator';
 
-export const validateUserRegister = [
+export const validateUserData = [
     check('firstName', 'Name is required').notEmpty(),
     check('email', 'Please incluede a valid email').isEmail(),
     check('password', 'Password should be at least 6 character long').isLength({ min: 6 }),
-    check('phoneNumber', 'Phone Number is required').notEmpty(),
+    // check('phoneNumber', 'Phone Number is required').notEmpty(),
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

@@ -1,13 +1,14 @@
 import express from 'express';
-import { register, login, logout, forgotPassword, resetPassword, verifyEmail, resendVerificationEmail, refreshToken } from '../controllers/userController.js';
+import { register, login, verifyToken, logout, forgotPassword, resetPassword, verifyEmail, resendVerificationEmail, refreshToken } from '../controllers/userController.js';
 import { validateToken } from '../middleware/authMiddleware.js';
 import { loginLimiter } from '../middleware/rateLimitMiddleware.js';
-import { validateUserRegister } from '../middleware/validationMiddleware.js';
+import { validateUserData } from '../middleware/validationMiddleware.js';
 
 const routes = express.Router();
 
-routes.post("/signup", validateUserRegister, register);
+routes.post("/signup", validateUserData, register);
 routes.post("/login", loginLimiter, login);
+routes.get("/verifyToken", validateToken, verifyToken);
 routes.post("/signout", validateToken, logout);
 routes.post("/forgot-password", forgotPassword);
 routes.post("/reset-password/:token", resetPassword);
