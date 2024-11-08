@@ -42,6 +42,8 @@ const userSchema = new mongose.Schema(
                 message: props => `${props.value} is not a valid Phone Number!`
             }
         },
+        wishList: [{ type: mongose.Schema.Types.ObjectId, ref: "Book" }],
+        cartList: [{ type: mongose.Schema.Types.ObjectId, ref: "Book" }],
         password: { type: String, required: true },
         Address: addressSchema,
         role: {
@@ -49,9 +51,9 @@ const userSchema = new mongose.Schema(
             enum: ['admin', 'seller', 'buyer'],
             default: 'buyer'
         },
-        
+
     },
-    {timestamps: true}
+    { timestamps: true }
 )
 
 userSchema.pre('save', async function (next) {
@@ -77,5 +79,5 @@ userSchema.methods.comparePassword = async function (condidatePassword) {
 }
 
 // Index fields that are frequently queried
-userSchema.index({ email: 1});
+userSchema.index({ email: 1 });
 export default mongose.model('User', userSchema)

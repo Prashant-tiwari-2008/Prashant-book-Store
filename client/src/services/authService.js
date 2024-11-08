@@ -7,7 +7,7 @@ export const registerUser = async (userDetails) => {
         if (response.data.success) {
             return response.data;
         } else {
-            console.log("error in regsin")
+            console.log("error in register")
         }
     } catch (error) {
         console.log(error, "error")

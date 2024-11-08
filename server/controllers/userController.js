@@ -138,10 +138,13 @@ export const refreshToken = (req, res, next) => {
 
 export const getUserProfile = async (req, res, next) => {
     try {
-        if (req.user.id !== req.params.userId && req.user.role === 'admin') {
-            return next(errorHandler(403, "You are not allowe to access this data"));
-        }
-        const user = await User.findById(req.params.id);
+        const userId = req.user.id; // extract user id form decoded token
+
+       const idToFetch = req.user.role === 'admin' && req.query.userId ? req.query.userId : userId
+        const user = await User.findById(idToFetch)
+            .select('-password') // exclude password form response
+            .populate('wishList', 'title author')
+            .populate('cartList', 'title author')
         if (!user) {
             return next(errorHandler(404, "User not found"));
         }
@@ -160,7 +163,7 @@ export const editUserProfile = async (req, res, next) => {
         if (req.user.id !== req.params.userId && req.user.role === 'admin') {
             return next(errorHandler(403, "You are not allowe to access this data"));
         }
-        const updatedUser = await User.findByIdAndUpdate(req.params.id)
+        const updatedUser = await User.findByIdAndUpdate(req.params.userId)
         console.log("updatedUser", updatedUser)
         console.log("updatedUser doc", updatedUser._doc)
         const { password, ...userWithoutPassword } = updatedUser._doc; // todo : what is _doc
@@ -168,12 +171,33 @@ export const editUserProfile = async (req, res, next) => {
             success: true,
             statusCode: 200,
             data: {
-                messae: "Profile updated successfully",
+                message: "Profile updated successfully",
                 userWithoutPassword
             }
         })
     } catch (error) {
         next(error);
+    }
+}
+
+export const addToWishList = async (req, res, next) => {
+    try {
+        let { bookId } = req.body;
+        const updatedData = await User.findByIdAndUpdate(req.params.userId,
+            { $addToSet: { wishList: bookId } }, // Add bookId only if it doesn't exist
+            { new: true }
+        )
+
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            data: {
+                messae: "Profile updated successfully",
+                wishList: updatedData.wishList
+            }
+        })
+    } catch (error) {
+        next(error)
     }
 }
 

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { addItemToWishlist, removeItemFromWishlist } from '../../redux/slices/WishListSlice';
 
 const WishlistButton = ({ book }) => {
+    
     const [wishlist, setWishlist] = useState(false);
     const dispatch = useDispatch();
 

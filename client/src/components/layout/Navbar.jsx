@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Avatar, Dropdown, DropdownDivider, DropdownItem, Navbar, TextInput, theme } from 'flowbite-react'
 import ThemeToggle from '../other/themeToggle'
-import { FaCartArrowDown, FaDribbble, FaSearch } from "react-icons/fa";
+import { FaCartArrowDown, FaSearch } from "react-icons/fa";
 import logo from './../../../public/images/logo.png'
 import { Link } from 'react-router-dom';
-import Cart from '../../pages/cart/Cart';
 import { useSelector } from 'react-redux';
 import SubNavbar from './subNavbar';
 import Button from '../common/Button';
@@ -12,7 +11,6 @@ import Button from '../common/Button';
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState();
   const { currentUser } = useSelector(state => state.user);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,12 +46,12 @@ const Header = () => {
                 label={
                   // <Avatar alt="User" img={logo} rounded bordered color='success' status="online" size="md" />
                   <div className='border-[1px] border-teal-100 rounded-full w-[60px]'>
-                    <h1 className='font-bold text-3xl self-center'>P</h1>  {/* // todo : either user Image or the first letter of name */}
+                    <h1 className='font-bold text-3xl self-center'>{currentUser?.firstName?.slice(0,1).toUpperCase()}</h1>  {/* // todo : either user Image or the first letter of name */}
                   </div>
                 }
               >
-                <Dropdown.Header>
-                  <p>{currentUser.name}</p>
+                <Dropdown.Header className='flex flex-col gap-2'>
+                  <p>{currentUser.firstName}</p>
                   <p>{currentUser.email}</p>
                 </Dropdown.Header>
                 <Link to={'/profile'}>

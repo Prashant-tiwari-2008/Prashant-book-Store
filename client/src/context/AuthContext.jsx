@@ -1,13 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
 import { createContext, useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux'
 import { verifyToken } from '../services/authService';
 import Loader from '../components/common/Loader';
+import { fetchUserDetail } from '../services/userService';
+import { setUserDetails } from '../redux/slices/userSlice';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const dispatch = useDispatch();
     const [isLoggedIn, setiIsLoggedIn] = useState(null);
+
     const { isPending, isError, data, error } = useQuery({
         queryKey: ['isLoggedIn'],
         queryFn: () => verifyToken(),
@@ -16,29 +20,49 @@ const AuthProvider = ({ children }) => {
         retry: 0, // Optional caching to minimize re-fetching // todo: need to read
     })
 
+    const fetchUserData = async () => { 
+        try {
+            const userData = await fetchUserDetail();
+            dispatch(setUserDetails(userData));
+        } catch (error) {
+            console.log("Failed to fetch user Details : ", error);
+            setiIsLoggedIn(false)
+        }
+    }
+
     useEffect(() => {
         if (data) {
             setiIsLoggedIn(true);
+            fetchUserData();
         } else if (isError) {
             setiIsLoggedIn(false);
         }
     }, [data, isError])
 
-    const loginMethod = (userData) => {
-        setUser(userData);
+    const loginMethod = () => {
         setiIsLoggedIn(true)
     }
 
     const logOutMethod = () => {
-        setUser(null);
         setiIsLoggedIn(false)
     }
+
+    // code suggested by chatGPT
+    // const loginMethod = (userData) => {
+    //     setIsLoggedIn(true);
+    //     dispatch(setUserDetails(userData));
+    // };
+
+    // const logOutMethod = () => {
+    //     setIsLoggedIn(false);
+    //     dispatch(clearUserDetails());
+    // };
 
     if (isPending) return <div className='flex justify-center items-center my-5 w-full h-full'><Loader /></div>;
 
 
     return (
-        <AuthContext.Provider value={{ user, isLoggedIn, loginMethod, logOutMethod }}>
+        <AuthContext.Provider value={{ isLoggedIn, loginMethod, logOutMethod }}>
             <div>
                 {children}
             </div>

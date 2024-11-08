@@ -1,42 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    currentUser: {
-        name: "Prashant tiwari",
-        email: "prashanttiwari.vns@gamil.com"
-    },
-    error: null,
-    loading: false
+    currentUser: {},
 }
 
 const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        signInSuccess: (state, action) => {
-            state.currentUser = action.payload;
-            state.loading = false;
-            state.error = null;
+        setUserDetails: (state, action) => {
+            state.currentUser = action.payload.data;
         },
-        signInFailure: (state, action) => {
-            state.loading = false;
-            state.error = action.payload;
-        },
-        signOutSuccess: (state, action) => {
-            state.currentUser = null;
-            state.loading = false;
-            state.error = null;
+        editUserDetails: (state, action) => {
+            state.currentUser = action.payload.data;
         }
-        // need to add
-        // update user => for admin
-        // delete user => for admin
     }
 })
 
 export const {
-    signInSuccess,
-    signInFailure,
-    signOutSuccess
+    setUserDetails,
+    editUserDetails
 } = userSlice.actions;
 
-export default userSlice.reducer
+export default userSlice.reducer;
