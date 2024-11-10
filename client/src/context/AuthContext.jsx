@@ -5,6 +5,7 @@ import { verifyToken } from '../services/authService';
 import Loader from '../components/common/Loader';
 import { fetchUserDetail } from '../services/userService';
 import { setUserDetails } from '../redux/slices/userSlice';
+import { setWishlist } from '../redux/slices/WishListSlice';
 
 export const AuthContext = createContext();
 
@@ -20,10 +21,11 @@ const AuthProvider = ({ children }) => {
         retry: 0, // Optional caching to minimize re-fetching // todo: need to read
     })
 
-    const fetchUserData = async () => { 
+    const fetchUserData = async () => {
         try {
             const userData = await fetchUserDetail();
             dispatch(setUserDetails(userData));
+            dispatch(setWishlist(userData?.data.wishList))
         } catch (error) {
             console.log("Failed to fetch user Details : ", error);
             setiIsLoggedIn(false)

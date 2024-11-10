@@ -8,7 +8,6 @@ import { Rating, TextInput } from "flowbite-react";
 import CustomeButton from '../../components/common/Button';
 import BookCarousel from '../../components/layout/BookCarousel';
 
-
 const Error = ({ message }) => <p>Error: {message}</p>;
 let tc = [
   { name: "Piracy free", url: "http://localhost:5173/src/assets/images/pivacy.svg" },
@@ -26,7 +25,6 @@ const BookDetail = () => {
   const queryClient = useQueryClient();
   const dynamicArray = new Array(5);
 
-
   // use the cached data if it sexists in the cache usenr the "book" key 
   // check if the data is coming from cache or not
   const { isPending, isError, data: book, error } = useQuery({
@@ -37,14 +35,11 @@ const BookDetail = () => {
   })
 
   // publisher
-
   const { isPending: relatedBookPending, isError: relatedBookIsError, data: relatedBook, error: relatedBookError } = useQuery({
     queryKey: ['relatedBook', book?.publisher],
     queryFn: () => fetchBooks({ Publisher: book?.publisher }),
     enabled: !!book?.publisher // run only publisher available
   })
-
-
 
   const handleSubmit = () => {
     console.log(pincode.length, "pincode")
@@ -157,7 +152,7 @@ const BookDetail = () => {
                   </div>
 
                   {/* vertical line */}
-                  <div class="h-auto w-[2px] bg-gray-200 border-0 dark:bg-gray-700 mx-4"></div>
+                  <div className="h-auto w-[2px] bg-gray-200 border-0 dark:bg-gray-700 mx-4"></div>
 
                   {/* card option */}
                   <div className='basis-1/4 flex flex-col gap-6'>

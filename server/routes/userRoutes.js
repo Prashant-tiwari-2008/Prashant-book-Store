@@ -1,16 +1,20 @@
 import express from 'express';
 import { validateToken } from '../middleware/authMiddleware.js';
 import { validateAdminRole } from '../middleware/adminMiddleware.js';
-import { getUserProfile, editUserProfile, deleteUserProfile, getAllUser, addToWishList } from '../controllers/userController.js'
+import { getUserProfile, editUserProfile, deleteUserProfile, getAllUser, addToWishList, removeFromWishList } from '../controllers/userController.js'
 import { validateUserData } from '../middleware/validationMiddleware.js';
 
 const routes = express.Router();
 
-routes.get("/profile", validateToken, getUserProfile)
-routes.put("/:id", validateToken, validateUserData, editUserProfile)
-routes.delete("/:id", validateToken, deleteUserProfile)
-routes.put("/addtowishlit/:id", validateToken, addToWishList)
+routes.get("/", validateToken, getUserProfile)
+routes.put("/", validateToken, validateUserData, editUserProfile)
+routes.delete("/", validateToken, deleteUserProfile)
+routes.put("/addtowishlit", validateToken, addToWishList)
+routes.put("/removeFromWishList", validateToken, removeFromWishList)
+
 // Admin-prfile
-routes.get("/", validateToken, validateAdminRole, getAllUser)
+routes.get("/admin/", validateToken, validateAdminRole, getAllUser)
+routes.put("/admin/editUser/:id", validateToken, validateAdminRole, editUserProfile);
+routes.delete("/admin/deleteUser/:id", validateToken, validateAdminRole, deleteUserProfile);
 
 export default routes

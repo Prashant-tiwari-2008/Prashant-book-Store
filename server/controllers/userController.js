@@ -140,11 +140,13 @@ export const getUserProfile = async (req, res, next) => {
     try {
         const userId = req.user.id; // extract user id form decoded token
 
-       const idToFetch = req.user.role === 'admin' && req.query.userId ? req.query.userId : userId
+        const idToFetch = req.user.role === 'admin' && req.query.userId ? req.query.userId : userId
         const user = await User.findById(idToFetch)
             .select('-password') // exclude password form response
-            .populate('wishList', 'title author')
-            .populate('cartList', 'title author')
+            // .populate('wishList', 'title author')
+            // .populate('cartList', 'title author')
+            .populate('wishList')
+            .populate('cartList')
         if (!user) {
             return next(errorHandler(404, "User not found"));
         }
@@ -183,7 +185,7 @@ export const editUserProfile = async (req, res, next) => {
 export const addToWishList = async (req, res, next) => {
     try {
         let { bookId } = req.body;
-        const updatedData = await User.findByIdAndUpdate(req.params.userId,
+        const updatedData = await User.findByIdAndUpdate(req.user.id,
             { $addToSet: { wishList: bookId } }, // Add bookId only if it doesn't exist
             { new: true }
         )
@@ -192,8 +194,29 @@ export const addToWishList = async (req, res, next) => {
             success: true,
             statusCode: 200,
             data: {
-                messae: "Profile updated successfully",
+                messae: "item added to wishList successfully",
                 wishList: updatedData.wishList
+            }
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const removeFromWishList = async (req, res, next) => {
+    try {
+        let { bookId } = req.body;
+        const updatedData = await User.findByIdAndUpdate(req.user.id,
+            { $pull: { wishList: bookId } },
+            { new: true }
+        )
+
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            data: {
+                message: "item removed from wishlist successfully",
+                wishlist: updatedData
             }
         })
     } catch (error) {

@@ -1,0 +1,4 @@
+1. signup is not not redirecting for the first time
+2. when your login it is not fetcing the user details
+3. wishlist toggle is not updating imediatily
+4. removefromWish list is not working properly
