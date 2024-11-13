@@ -1,8 +1,8 @@
 import React from 'react'
 import WishlistButton from './WishlistButton';
 import { Tooltip } from "flowbite-react";
-import CustomeButton from './Button';
 import { Link } from 'react-router-dom';
+import AddToCartButton from './AddToCartButton';
 
 const BookCard = ({ book }) => {
 
@@ -30,7 +30,7 @@ const BookCard = ({ book }) => {
                 <div className='mt-2'>
                     <div className='flex gap-4'>
                         <WishlistButton book={book} />
-                        <CustomeButton title={'Add To Cart'} />
+                        <AddToCartButton title={'Add To Cart'} />
                     </div>
                 </div>
             </article>
