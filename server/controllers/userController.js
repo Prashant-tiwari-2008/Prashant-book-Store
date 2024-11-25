@@ -139,7 +139,6 @@ export const refreshToken = (req, res, next) => {
 export const getUserProfile = async (req, res, next) => {
     try {
         const userId = req.user.id; // extract user id form decoded token
-
         const idToFetch = req.user.role === 'admin' && req.query.userId ? req.query.userId : userId
         const user = await User.findById(idToFetch)
             .select('-password') // exclude password form response
@@ -265,5 +264,47 @@ export const getAllUser = async (req, res, next) => {
 
     } catch (error) {
         next(error);
+    }
+}
+
+export const addToCart = async (req, res, next) => {
+    try {
+        let { bookId } = req.body;
+        const updatedData = await User.findByIdAndUpdate(req.user.id,
+            { $addToSet: { cartList: bookId } }, // Add bookId only if it doesn't exist
+            { new: true }
+        )
+
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            data: {
+                messae: "item added to wishList successfully",
+                cartList: updatedData.cartList
+            }
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const removeFromCart = async (req, res, next) => {
+    try {
+        let { bookId } = req.body;
+        const updatedData = await User.findByIdAndUpdate(req.user.id,
+            { $pull: { cartList: bookId } },
+            { new: true }
+        )
+
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            data: {
+                message: "item removed from Cart list successfully",
+                cartList: updatedData
+            }
+        })
+    } catch (error) {
+        next(error)
     }
 }

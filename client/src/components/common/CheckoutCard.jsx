@@ -1,9 +1,11 @@
 import React from 'react'
 import { IoClose } from "react-icons/io5";
 import { Button } from 'flowbite-react'
+import { useDispatch } from 'react-redux';
 
 const CheckoutCard = ({ book }) => {
-    console.log("checkout page book detail", book);
+    const dispatch = useDispatch();
+
     return (
         <>
             {/* item listing */}

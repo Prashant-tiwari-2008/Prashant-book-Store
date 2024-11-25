@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const addToCart = async ({ bookId }) => {
+export const addToCart = async ( bookId) => {
+    debugger
     try {
-        let url = 'http://localhost:4001/api/v1/addToCart';
+        let url = 'http://localhost:4001/api/v1/user/addToCart';
         let response = axios.put(url, { bookId }, { withCredentials: true });
         if ((await response).data.success) {
             return response.data
@@ -15,7 +16,7 @@ export const addToCart = async ({ bookId }) => {
     }
 }
 
-export const removeFromCart = async ({ bookId }) => {
+export const removeFromCart = async (bookId) => {
     try {
         let url = 'http://localhost:4001/api/v1/removeFromCart';
         let response = axios.put(url, { bookId }, { withCredentials: true });

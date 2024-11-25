@@ -6,9 +6,9 @@
 
 
 Add to cart funcationality=>
-1. fetch earling added item from db  => done
-2. dispatch item and set to current store => done
-3. onclick of add to card dispatch item into current cart => Check if the item already exists in the cart to avoid duplicate entries. 2.Rollback if API fails
+1. fetch earling added item from db  => DONE
+2. dispatch item and set to current store => DONE
+3. onclick of add to card dispatch item into current cart => Check if the item already exists in the cart to avoid duplicate entries. 2.Rollback if API fails ==> DONE
 4. hit an api to update the cart data in the backend
     a. Use debouncing or batch updates for multiple rapid API calls to minimize load (e.g., adding multiple items quickly).
     b. Always check the backend's response for consistency and roll back the store changes if needed.

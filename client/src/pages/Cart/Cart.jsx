@@ -5,7 +5,6 @@ import CartPricing from '../../components/common/CartPricing';
 import { useSelector } from 'react-redux';
 
 const Cart = () => {
-  debugger
   const { items: cartListItems, totalitems } = useSelector((state) => state.cart)
   return (
     <div className="my-5">

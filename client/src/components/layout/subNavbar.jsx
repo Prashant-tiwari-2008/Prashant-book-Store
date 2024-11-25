@@ -17,7 +17,7 @@ const SubNavbar = () => {
     <div className='hidden md:inline'>
       <Navbar className='list-none border-b-2 w-full z-50 shadow-sm shadow-teal-100'>
         {CATEGORIES.map(({ key, label, category }) => (
-          <Navbar.Link key={key} as={'div'}><Link to={`/bookList/${category}`}>{label}</Link></Navbar.Link>
+          <Navbar.Link key={key} as={'div'}><Link to={`/bookList/${category}`} ><p className='cursor-pointer'>{label}</p></Link></Navbar.Link>
         ))}
       </Navbar>
     </div>

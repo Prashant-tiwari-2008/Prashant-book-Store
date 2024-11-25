@@ -4,28 +4,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, removeItemFromCart } from '../../redux/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../../services/cartService';
+import { removeItemFromWishlist } from '../../redux/slices/WishListSlice';
+import { removeFromWishList } from '../../services/userService';
 
 const AddToCartButton = ({ book }) => {
-    debugger
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { item: cartList } = useSelector(state => state.cart);
-    let isBookInCart = false;
+    const { items: cartList } = useSelector(state => state.cart);
+    const { items: wishlist } = useSelector(state => state.wishlist);
 
-    if (cartList) { //run only when user is logged in
+
+    let isBookInCart = false;
+    //run only when user is logged in
+    if (cartList) {
         isBookInCart = cartList.some(item => item._id === book._id)
     }
-    // check is the book in wishlist
 
-    const AddToCart = async(book) => {
+    let isBookInWishList = false;
+    // check is the book in wishlist
+    if (wishlist) {
+        isBookInWishList = wishlist.some(item => item._id === book._id)
+    }
+
+
+    const AddToCart = async (book) => {
         debugger
         try {
             if (isBookInCart) {
                 navigate("/cart");
             } else {
                 dispatch(addItemToCart(book));
-                // await addToCart(book._id)
+                await addToCart(book._id);
+                if (isBookInWishList) {
+                    removeItemFromWishlist(book._id)
+                    await removeFromWishList(book._id)
+                }
             }
         } catch (error) {
             console.log("failed to add in cart");
