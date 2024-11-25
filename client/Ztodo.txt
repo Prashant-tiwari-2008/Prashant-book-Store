@@ -2,3 +2,24 @@
 2. when your login it is not fetcing the user details
 3. wishlist toggle is not updating imediatily
 4. removefromWish list is not working properly
+
+
+
+Add to cart funcationality=>
+1. fetch earling added item from db  => done
+2. dispatch item and set to current store => done
+3. onclick of add to card dispatch item into current cart => Check if the item already exists in the cart to avoid duplicate entries. 2.Rollback if API fails
+4. hit an api to update the cart data in the backend
+    a. Use debouncing or batch updates for multiple rapid API calls to minimize load (e.g., adding multiple items quickly).
+    b. Always check the backend's response for consistency and roll back the store changes if needed.
+5. if the item is alreday present in the wishList remove from wishlist slice and hit an api to update remove the item form wishlist in db
+    a. Before adding to the cart, check if the item exists in the wishlist and remove it.
+    b. Use a single transaction-like API call to handle both operations (optional, but improves efficiency).
+    c. Reflect the changes optimistically in the UI while making the API call.
+
+Best Practices Summary
+    Avoid Duplication: Check for duplicates in the cart and wishlist before making changes.
+    Optimistic Updates: Update the UI and Redux state optimistically, but rollback on API failures.
+    Batch API Calls: Use debouncing or batch requests for multiple updates.
+    Centralized Logic: Use utility functions or services for common checks (e.g., isItemInWishlist).
+    State Normalization: Store data as IDs with a separate lookup for details if the lists grow large.

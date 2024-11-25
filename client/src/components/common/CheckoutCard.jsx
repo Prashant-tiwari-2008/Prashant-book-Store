@@ -2,7 +2,8 @@ import React from 'react'
 import { IoClose } from "react-icons/io5";
 import { Button } from 'flowbite-react'
 
-const CheckoutCard = ({book}) => {
+const CheckoutCard = ({ book }) => {
+    console.log("checkout page book detail", book);
     return (
         <>
             {/* item listing */}
@@ -10,13 +11,13 @@ const CheckoutCard = ({book}) => {
             <div className='flex mt-5 gap-5 w-full'>
                 {/* book image */}
                 <div>
-                    <img src={book.ThumbnailURL} className='h-36 w-[103px]' alt="book-Thumbnail" />
+                    <img src={book.ThumbnailURL} className='h-36 w-[125px]' alt="book-Thumbnail" />
                 </div>
 
                 {/* Book detail */}
                 <div className='flex flex-col gap-2 w-full'>
                     <p>{book.title}</p>
-                    <p>by : {book.author[0]}</p>
+                    <p>by : {'testing'}</p>
                     <div className='flex gap-2'>
                         <p>Qty :</p>
                         <Button>-</Button>

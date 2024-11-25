@@ -6,12 +6,13 @@ import Loader from '../components/common/Loader';
 import { fetchUserDetail } from '../services/userService';
 import { setUserDetails } from '../redux/slices/userSlice';
 import { setWishlist } from '../redux/slices/WishListSlice';
+import { setCartList } from '../redux/slices/cartSlice';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const dispatch = useDispatch();
-    const [isLoggedIn, setiIsLoggedIn] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
 
     const { isPending, isError, data, error } = useQuery({
         queryKey: ['isLoggedIn'],
@@ -26,27 +27,28 @@ const AuthProvider = ({ children }) => {
             const userData = await fetchUserDetail();
             dispatch(setUserDetails(userData));
             dispatch(setWishlist(userData?.data.wishList))
+            dispatch(setCartList(userData?.data.cartList))
         } catch (error) {
             console.log("Failed to fetch user Details : ", error);
-            setiIsLoggedIn(false)
+            setIsLoggedIn(false)
         }
     }
 
     useEffect(() => {
         if (data) {
-            setiIsLoggedIn(true);
+            setIsLoggedIn(true);
             fetchUserData();
         } else if (isError) {
-            setiIsLoggedIn(false);
+            setIsLoggedIn(false);
         }
     }, [data, isError])
 
     const loginMethod = () => {
-        setiIsLoggedIn(true)
+        setIsLoggedIn(true)
     }
 
     const logOutMethod = () => {
-        setiIsLoggedIn(false)
+        setIsLoggedIn(false)
     }
 
     // code suggested by chatGPT

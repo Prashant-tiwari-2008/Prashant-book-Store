@@ -4,35 +4,31 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         items: [],
-        totalQuantity: 0,
-        totalPrice: 0,
-    },
+        totalitems: 0,
+},
     reducers: {
-        addItemToCard: (state, action) => {
+        setCartList: (state, action) => {
+            state.items = action.payload;
+            state.totalitems = action.payload.length;
+        },
+        addItemToCart: (state, action) => {
+            debugger
             const newItem = action.payload;
-            const existingItem = state.items.find(item => item.id === newItem.id);
+            const existingItem = state.items.find(item => item._id === newItem._id);
 
-            if (existingItem) {
-                existingItem.quantity += 1;
-                existingItem.totalPrice += newItem.selling_price;
-            } else {
-                state.items.push({
-                    ...newItem,
-                    quantity: 1,
-                    totalPrice: newItem.price
-                });
+            if (!existingItem) {
+                state.items.push(newItem)
             }
-            state.totalQuantity += 1;
-            state.totalPrice += newItem.price;
+            state.totalitems += 1;
         },
 
         removeItemFromCart: (state, action) => {
             const id = action.payload;
-            const existingItem = state.items.find(item => item.id === id);
+            const existingItem = state.items.find(item => item._id === _id);
 
+            // need to check
             if (existingItem) {
-                state.totalQuantity -= existingItem.quantity;
-                state.totalPrice -= existingItem.totalPrice;
+                state.totalitems -= existingItem.quantity;
                 state.items = state.items.filter(item => item.id !== id);
             }
         },
@@ -45,5 +41,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { addItemToCard, removeItemFromCart, clearCart } = cartSlice.actions;
+export const { setCartList, addItemToCart, removeItemFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

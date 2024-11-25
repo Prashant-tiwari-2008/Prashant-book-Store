@@ -30,7 +30,7 @@ const BookCard = ({ book }) => {
                 <div className='mt-2'>
                     <div className='flex gap-4'>
                         <WishlistButton book={book} />
-                        <AddToCartButton title={'Add To Cart'} />
+                        <AddToCartButton book={book}/>
                     </div>
                 </div>
             </article>
