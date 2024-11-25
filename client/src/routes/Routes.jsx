@@ -16,10 +16,10 @@ import PageNotFound from '../pages/PageNotFound';
 import PrivateRoutes from './PrivateRoutes'
 import AdminRoute from './AdminRoutes'
 import Header from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
 import Breadcrumbs from '../components/layout/Breadcrumbs';
 import WishlistPage from '../pages/User/WishlistPage';
 import NonLoggedInRoutes from './NonLoggedInRoutes';
+import FooterComponent from '../components/layout/Footer';
 
 
 const AppRoutes = () => {
@@ -29,7 +29,7 @@ const AppRoutes = () => {
     return (
         <>
             {!hideHeaderAndBreadcrumbsAndFooter && <Header />}
-            <div className='md:container md:mx-auto'>
+            <div className='md:container md:mx-auto mb-[68px]'>
                 {!hideHeaderAndBreadcrumbsAndFooter && <Breadcrumbs />}
                 <Routes>
                     {/*NonLoggedInRoutes  */}
@@ -62,7 +62,7 @@ const AppRoutes = () => {
                     <Route path="/*" element={<PageNotFound />} />
                 </Routes>
             </div>
-            {!hideHeaderAndBreadcrumbsAndFooter && <Footer />}
+            {!hideHeaderAndBreadcrumbsAndFooter && <FooterComponent />}
         </>
     )
 }

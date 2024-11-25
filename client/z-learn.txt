@@ -1,5 +1,5 @@
 need to install pacckage 
-1. Sytled components or emotion
+1. Sytled components or emotion => not require in this prject
 2. Framer Motion
 3. Jest
 4. React Laxy and suspended
@@ -7,14 +7,10 @@ need to install pacckage
 6. redux-persist
 7. eslint
 
-installed Package
-1. talwind css
-2. Redux toolkit
-3. React router v6
-5. flowbite-react
-6. React query/tanStack query
-7. react-circular-progressbar
-
-
 //todo : 
-complete pagination with reactquery
+1. complete pagination with reactquery
+2. how to setup .env file on frontend
+3. mobile responsive
+4. Understaind redirecting
+5. usecallback and usermemo
+6. pure functions
