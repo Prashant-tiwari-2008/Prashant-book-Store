@@ -2,10 +2,21 @@ import React from 'react'
 import { IoClose } from "react-icons/io5";
 import { Button } from 'flowbite-react'
 import { useDispatch } from 'react-redux';
+import { removeFromCart } from '../../services/cartService';
+import { addItemToCart, removeItemFromCart } from '../../redux/slices/cartSlice';
 
 const CheckoutCard = ({ book }) => {
     const dispatch = useDispatch();
 
+    const handleRemoveFromCart = async () => {
+        try {
+            dispatch(removeItemFromCart(book._id))
+            await removeFromCart(book._id)
+        } catch (error) {
+            console.log("Error in removing from cart",  error);
+            dispatch(addItemToCart(book._id));
+        }
+    }
     return (
         <>
             {/* item listing */}
@@ -32,7 +43,7 @@ const CheckoutCard = ({ book }) => {
                 {/* price detail and remove */}
                 <div className='flex flex-col float-right'>
                     <div className='float-right '>
-                        <IoClose className='float-right' />
+                        <IoClose className='float-right' onClick={() => handleRemoveFromCart()} />
                     </div>
                     <div className='flex gap-2 mt-1 text-lg items-center'>
                         <div className='text-sm'><span>({(book.discount)}%)</span></div>

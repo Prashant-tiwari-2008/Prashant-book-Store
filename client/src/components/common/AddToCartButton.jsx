@@ -29,7 +29,6 @@ const AddToCartButton = ({ book }) => {
 
 
     const AddToCart = async (book) => {
-        debugger
         try {
             if (isBookInCart) {
                 navigate("/cart");

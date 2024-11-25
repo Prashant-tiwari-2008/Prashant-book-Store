@@ -22,13 +22,12 @@ const cartSlice = createSlice({
         },
 
         removeItemFromCart: (state, action) => {
-            const id = action.payload;
-            const existingItem = state.items.find(item => item._id === _id);
-
+            const bookId = action.payload;
+            const existingItem = state.items.find(item => item._id === bookId);
             // need to check
             if (existingItem) {
                 state.totalitems -= existingItem.quantity;
-                state.items = state.items.filter(item => item.id !== id);
+                state.items = state.items.filter(item => item._id !== bookId);
             }
         },
 
