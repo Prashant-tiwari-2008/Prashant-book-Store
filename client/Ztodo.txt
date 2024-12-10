@@ -2,8 +2,7 @@
 2. when your login it is not fetcing the user details
 3. wishlist toggle is not updating imediatily
 4. removefromWish list is not working properly
-
-
+5. Api calling on tab switch - need to stop it
 
 Add to cart funcationality=>
 1. fetch earling added item from db  => DONE

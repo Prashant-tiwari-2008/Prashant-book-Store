@@ -283,7 +283,7 @@ export const addToCart = async (req, res, next) => {
                 cartList: updatedData.cartList
             }
         })
-    } catch (error) {
+    } catch (error) {   
         next(error)
     }
 }

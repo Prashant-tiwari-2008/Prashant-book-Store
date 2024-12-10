@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IoClose } from "react-icons/io5";
 import { Button } from 'flowbite-react'
 import { useDispatch } from 'react-redux';
@@ -13,10 +13,30 @@ const CheckoutCard = ({ book }) => {
             dispatch(removeItemFromCart(book._id))
             await removeFromCart(book._id)
         } catch (error) {
-            console.log("Error in removing from cart",  error);
-            dispatch(addItemToCart(book._id));
+            console.log("Error in removing from cart", error);
+            dispatch(addItemToCart(book));
         }
     }
+
+    const handleIncrementItem = async () => {
+        try {
+            dispatch(addItemToCart(book));
+        } catch (error) {
+            console.log("Error in incrementing item", error)
+            dispatch(removeItemFromCart(book._id))
+        }
+    }
+
+    const handleDecrementItem = async () => {
+        try {
+            dispatch(removeItemFromCart(book))
+        } catch (error) {
+            console.log("Error in incrementing item", error)
+            dispatch(addItemToCart(book));
+        }
+    }
+
+
     return (
         <>
             {/* item listing */}
@@ -31,13 +51,19 @@ const CheckoutCard = ({ book }) => {
                 <div className='flex flex-col gap-2 w-full'>
                     <p>{book.title}</p>
                     <p>by : {'testing'}</p>
-                    <div className='flex gap-2'>
-                        <p>Qty :</p>
-                        <Button>-</Button>
-                        <p>{1}</p>
-                        <Button>+</Button>
-
+                    <div className="flex items-center gap-3">
+                        <p className="text-gray-700 font-medium">Qty:</p>
+                        <button onClick={handleDecrementItem}
+                            className="w-8 h-8 bg-gray-200 text-gray-700 font-bold border border-gray-300 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                            -
+                        </button>
+                        <p className="text-gray-700 font-semibold">{book.quantity ? book.quantity : 0}</p>
+                        <button onClick={handleIncrementItem}
+                            className="w-8 h-8 bg-gray-200 text-gray-700 font-bold border border-gray-300 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                            +
+                        </button>
                     </div>
+
                 </div>
 
                 {/* price detail and remove */}

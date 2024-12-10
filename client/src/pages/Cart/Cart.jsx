@@ -5,14 +5,16 @@ import CartPricing from '../../components/common/CartPricing';
 import { useSelector } from 'react-redux';
 
 const Cart = () => {
+  debugger
   const { items: cartListItems, totalitems } = useSelector((state) => state.cart)
+
   return (
     <div className="my-5">
       <div className='flex'>
         <div className='flex flex-col basis-[68%] mx-3 shadow-md dark:shadow-gray-600 rounded p-5'>
           <p>Total Items {totalitems}</p>
           {cartListItems ?
-            (cartListItems.map((book) => <CheckoutCard book={book} />)) :
+            (cartListItems.map((book) => <CheckoutCard book={book} key={book._id}/>)) :
             (
               <div className='flex justify-center items-center flex-col h-full'>
                 <h1 className='text-2xl'>No item in the cart!</h1>

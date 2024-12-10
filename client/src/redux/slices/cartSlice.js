@@ -12,11 +12,15 @@ const cartSlice = createSlice({
             state.totalitems = action.payload.length;
         },
         addItemToCart: (state, action) => {
+            debugger
             const newItem = action.payload;
             const existingItem = state.items.find(item => item._id === newItem._id);
 
             if (!existingItem) {
+                newItem.quantity = 1;
                 state.items.push(newItem)
+            }else{
+                existingItem.quantity += 1
             }
             state.totalitems += 1;
         },
@@ -24,10 +28,11 @@ const cartSlice = createSlice({
         removeItemFromCart: (state, action) => {
             const bookId = action.payload;
             const existingItem = state.items.find(item => item._id === bookId);
-            // need to check
             if (existingItem) {
                 state.totalitems -= existingItem.quantity;
                 state.items = state.items.filter(item => item._id !== bookId);
+            }else{
+
             }
         },
 

@@ -1,7 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const CartPricing = () => {
-    
+    const { items: cartListItems, totalitems } = useSelector((state) => state.cart)
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalDiscount, setTotalDiscount] = useState(0);
+    const [totalOrderValue, setTotalOrderValue] = useState(0);
+    const [totalPayableAmout, setTotalPayableAmout] = useState(0);
+
+
+    useEffect(() => {
+        console.log(cartListItems.map((item) => {
+            debugger
+            item.retail_price * item.quantity
+        }), "reatial price");
+        setTotalPrice(totalPrice + [...cartListItems.map((item) => item.retail_price * item.quantity)]);
+        setTotalOrderValue(totalOrderValue + cartListItems.map((item) => item.selling_price * item.quantity));
+        setTotalDiscount(totalPrice - totalOrderValue);
+        setTotalPayableAmout(totalPayableAmout + cartListItems.map((item) => item.selling_price * item.quantity));
+    }, [])
+
     return (
         <div className='flex basis-[32%] flex-col'>
             <div className="p-6 max-w-md rounded-lg shadow-md dark:shadow-gray-600">
@@ -10,15 +28,15 @@ const CartPricing = () => {
                     <h2 className="font-semibold text-lg mb-2">Price Details (2 Items)</h2>
                     <div className="flex justify-between text-gray-100">
                         <span>Total MRP</span>
-                        <span>₹2248.00</span>
+                        <span>₹{totalPrice}.00</span>
                     </div>
                     <div className="flex justify-between text-green-600">
                         <span>Discount on MRP</span>
-                        <span>-₹160.00</span>
+                        <span>-₹{totalDiscount}.00</span>
                     </div>
                     <div className="flex justify-between text-gray-200">
                         <span>Order Value</span>
-                        <span>₹2088.00</span>
+                        <span>₹{totalOrderValue}.00</span>
                     </div>
                     <div className="flex justify-between text-gray-600">
                         <span>Shipping Charges</span>
@@ -27,7 +45,7 @@ const CartPricing = () => {
                     <hr className="my-2" />
                     <div className="flex justify-between text-xl font-semibold">
                         <span>You Pay</span>
-                        <span>₹2088.00</span>
+                        <span>₹{totalPayableAmout}.00</span>
                     </div>
                 </div>
 
