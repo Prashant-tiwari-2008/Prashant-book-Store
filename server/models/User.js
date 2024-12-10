@@ -43,7 +43,12 @@ const userSchema = new mongose.Schema(
             }
         },
         wishList: [{ type: mongose.Schema.Types.ObjectId, ref: "Book" }],
-        cartList: [{ type: mongose.Schema.Types.ObjectId, ref: "Book" }],
+        cartList: [
+            {
+                bookId: { type: mongose.Schema.Types.ObjectId, ref: "Book" },
+                quantity: { type: Number, default: 1 }
+            }
+        ],
         password: { type: String, required: true },
         Address: addressSchema,
         role: {

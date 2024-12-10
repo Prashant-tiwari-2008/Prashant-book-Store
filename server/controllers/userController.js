@@ -269,12 +269,24 @@ export const getAllUser = async (req, res, next) => {
 
 export const addToCart = async (req, res, next) => {
     try {
-        let { bookId } = req.body;
-        const updatedData = await User.findByIdAndUpdate(req.user.id,
-            { $addToSet: { cartList: bookId } }, // Add bookId only if it doesn't exist
-            { new: true }
-        )
+        let { bookId, quantity } = req.body;
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            })
+        }
 
+        const cartItem = user.cartList.find((item) => item.bookId === bookId);
+        if (cartItem) {
+            cartItem.quantity += quantity ?? 1;
+        } else {
+            let { bookId, quantity } = req.body;
+            user.cartList.push({ bookId, quantity: quantity ? quantity : 1 })
+        }
+        await user.save();
+        
         res.status(200).json({
             success: true,
             statusCode: 200,
@@ -283,7 +295,7 @@ export const addToCart = async (req, res, next) => {
                 cartList: updatedData.cartList
             }
         })
-    } catch (error) {   
+    } catch (error) {
         next(error)
     }
 }

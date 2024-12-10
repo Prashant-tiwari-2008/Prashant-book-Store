@@ -12,7 +12,6 @@ const cartSlice = createSlice({
             state.totalitems = action.payload.length;
         },
         addItemToCart: (state, action) => {
-            debugger
             const newItem = action.payload;
             const existingItem = state.items.find(item => item._id === newItem._id);
 
