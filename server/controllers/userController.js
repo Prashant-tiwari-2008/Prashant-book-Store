@@ -142,10 +142,12 @@ export const getUserProfile = async (req, res, next) => {
         const idToFetch = req.user.role === 'admin' && req.query.userId ? req.query.userId : userId
         const user = await User.findById(idToFetch)
             .select('-password') // exclude password form response
-            // .populate('wishList', 'title author')
-            // .populate('cartList', 'title author')
-            .populate('wishList')
-            .populate('cartList')
+            .populate('wishList','title author price') // populate wishlist directly
+            .populate({
+                path : 'cartList.bookId', // populate BookId inside carlist
+                model :"Book", // specify the model
+                select: "title author price" // Only fetch required fields
+            })
         if (!user) {
             return next(errorHandler(404, "User not found"));
         }
@@ -185,7 +187,7 @@ export const addToWishList = async (req, res, next) => {
     try {
         let { bookId } = req.body;
         const updatedData = await User.findByIdAndUpdate(req.user.id,
-            { $addToSet: { wishList: bookId } }, // Add bookId only if it doesn't exist
+            { $addToSet: { wishList: bookId } },
             { new: true }
         )
 
@@ -282,11 +284,10 @@ export const addToCart = async (req, res, next) => {
         if (cartItem) {
             cartItem.quantity += quantity ?? 1;
         } else {
-            let { bookId, quantity } = req.body;
-            user.cartList.push({ bookId, quantity: quantity ? quantity : 1 })
+            user.cartList.push({ bookId, quantity: quantity || 1 })
         }
         await user.save();
-        
+
         res.status(200).json({
             success: true,
             statusCode: 200,

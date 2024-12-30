@@ -6,6 +6,7 @@ import { removeFromCart } from '../../services/cartService';
 import { addItemToCart, removeItemFromCart } from '../../redux/slices/cartSlice';
 
 const CheckoutCard = ({ book }) => {
+    debugger
     const dispatch = useDispatch();
 
     const handleRemoveFromCart = async () => {

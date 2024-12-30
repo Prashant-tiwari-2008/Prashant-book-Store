@@ -23,6 +23,7 @@ const AuthProvider = ({ children }) => {
     })
 
     const fetchUserData = async () => {
+        debugger
         try {
             const userData = await fetchUserDetail();
             dispatch(setUserDetails(userData));

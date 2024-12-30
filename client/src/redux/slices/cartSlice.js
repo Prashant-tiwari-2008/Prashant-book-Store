@@ -5,12 +5,13 @@ const cartSlice = createSlice({
     initialState: {
         items: [],
         totalitems: 0,
-},
+    },
     reducers: {
         setCartList: (state, action) => {
             state.items = action.payload;
             state.totalitems = action.payload.length;
         },
+
         addItemToCart: (state, action) => {
             const newItem = action.payload;
             const existingItem = state.items.find(item => item._id === newItem._id);
@@ -18,7 +19,7 @@ const cartSlice = createSlice({
             if (!existingItem) {
                 newItem.quantity = 1;
                 state.items.push(newItem)
-            }else{
+            } else {
                 existingItem.quantity += 1
             }
             state.totalitems += 1;
@@ -30,7 +31,7 @@ const cartSlice = createSlice({
             if (existingItem) {
                 state.totalitems -= existingItem.quantity;
                 state.items = state.items.filter(item => item._id !== bookId);
-            }else{
+            } else {
 
             }
         },

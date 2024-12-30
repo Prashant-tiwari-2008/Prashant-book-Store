@@ -78,6 +78,13 @@ userSchema.pre('save', async function (next) {
 // todo : need to add wishlist option
 // todo : need to add cart option
 
+// Virtual to return `book` instead of `bookId`
+userSchema.virtual("cartListWithDetails").get(function () {
+    return this.cartList.map(item => ({
+      book: item.bookId, // Add book details here if populated
+      quantity: item.quantity
+    }));
+  });
 // Add an instance method to compare passwords
 userSchema.methods.comparePassword = async function (condidatePassword) {
     return await bcrypt.compare(condidatePassword, this.password)
