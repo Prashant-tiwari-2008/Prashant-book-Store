@@ -2,21 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 const CartPricing = () => {
+
     const { items: cartListItems, totalitems } = useSelector((state) => state.cart)
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalDiscount, setTotalDiscount] = useState(0);
     const [totalOrderValue, setTotalOrderValue] = useState(0);
     const [totalPayableAmout, setTotalPayableAmout] = useState(0);
-
-    //     discount
-    //     :
-    //     22.1
-    //     retail_price
-    //     :
-    //     199
-    // // selling_price
-    // :
-    // 155
 
     useEffect(() => {
         setTotalPrice(cartListItems.reduce((accumulator, currentValue) => {
@@ -30,7 +21,7 @@ const CartPricing = () => {
         }, 0));
         setTotalDiscount(totalPrice - totalPayableAmout)
 
-    }, [])
+    }, [cartListItems])
 
     return (
         <div className='flex basis-[32%] flex-col'>
