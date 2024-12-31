@@ -8,17 +8,17 @@ import { removeItemFromWishlist } from '../../redux/slices/WishListSlice';
 import { removeFromWishList } from '../../services/userService';
 
 const AddToCartButton = ({ book }) => {
+    debugger
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { items: cartList } = useSelector(state => state.cart);
     const { items: wishlist } = useSelector(state => state.wishlist);
 
-
     let isBookInCart = false;
     //run only when user is logged in
     if (cartList) {
-        isBookInCart = cartList.some(item => item._id === book._id)
+        isBookInCart = cartList.some(item => item.bookId._id === book._id)
     }
 
     let isBookInWishList = false;

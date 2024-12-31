@@ -74,17 +74,14 @@ userSchema.pre('save', async function (next) {
     }
 })
 
-// todo : need to add virtual function to get full name
-// todo : need to add wishlist option
-// todo : need to add cart option
-
 // Virtual to return `book` instead of `bookId`
-userSchema.virtual("cartListWithDetails").get(function () {
+userSchema.virtual("book").get(function () {
     return this.cartList.map(item => ({
-      book: item.bookId, // Add book details here if populated
-      quantity: item.quantity
+        book: item.bookId, // Add book details here if populated
+        quantity: item.quantity
     }));
-  });
+});
+
 // Add an instance method to compare passwords
 userSchema.methods.comparePassword = async function (condidatePassword) {
     return await bcrypt.compare(condidatePassword, this.password)
@@ -93,3 +90,8 @@ userSchema.methods.comparePassword = async function (condidatePassword) {
 // Index fields that are frequently queried
 userSchema.index({ email: 1 });
 export default mongose.model('User', userSchema)
+
+// todo : need to add virtual function to get full name
+// todo : need to add wishlist option
+// todo : need to add cart option
+

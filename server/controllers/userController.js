@@ -146,7 +146,7 @@ export const getUserProfile = async (req, res, next) => {
             .populate({
                 path : 'cartList.bookId', // populate BookId inside carlist
                 model :"Book", // specify the model
-                select: "title author price" // Only fetch required fields
+                select: "title ThumbnailURL author retail_price selling_price discount" // Only fetch required fields
             })
         if (!user) {
             return next(errorHandler(404, "User not found"));

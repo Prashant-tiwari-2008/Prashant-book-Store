@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../../services/cartService';
 import { addItemToCart, removeItemFromCart } from '../../redux/slices/cartSlice';
 
-const CheckoutCard = ({ book }) => {
-    debugger
+const CheckoutCard = ({ book,quantity }) => {
+
     const dispatch = useDispatch();
 
     const handleRemoveFromCart = async () => {
@@ -58,7 +58,7 @@ const CheckoutCard = ({ book }) => {
                             className="w-8 h-8 bg-gray-200 text-gray-700 font-bold border border-gray-300 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
                             -
                         </button>
-                        <p className="text-gray-700 font-semibold">{book.quantity ? book.quantity : 0}</p>
+                        <p className="text-gray-700 font-semibold">{quantity ? quantity : 1}</p>
                         <button onClick={handleIncrementItem}
                             className="w-8 h-8 bg-gray-200 text-gray-700 font-bold border border-gray-300 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
                             +
