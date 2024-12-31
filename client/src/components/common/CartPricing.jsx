@@ -8,16 +8,28 @@ const CartPricing = () => {
     const [totalOrderValue, setTotalOrderValue] = useState(0);
     const [totalPayableAmout, setTotalPayableAmout] = useState(0);
 
+    //     discount
+    //     :
+    //     22.1
+    //     retail_price
+    //     :
+    //     199
+    // // selling_price
+    // :
+    // 155
 
     useEffect(() => {
-        console.log(cartListItems.map((item) => {
-            debugger
-            item.retail_price * item.quantity
-        }), "reatial price");
-        setTotalPrice(totalPrice + [...cartListItems.map((item) => item.retail_price * item.quantity)]);
-        setTotalOrderValue(totalOrderValue + cartListItems.map((item) => item.selling_price * item.quantity));
-        setTotalDiscount(totalPrice - totalOrderValue);
-        setTotalPayableAmout(totalPayableAmout + cartListItems.map((item) => item.selling_price * item.quantity));
+        setTotalPrice(cartListItems.reduce((accumulator, currentValue) => {
+            return accumulator + (currentValue.bookId.retail_price * currentValue.quantity);
+        }, 0));
+        setTotalOrderValue(cartListItems.reduce((accumulator, currentValue) => {
+            return accumulator + (currentValue.bookId.retail_price * currentValue.quantity);
+        }, 0));
+        setTotalPayableAmout(cartListItems.reduce((accumulator, currentValue) => {
+            return accumulator + (currentValue.bookId.selling_price * currentValue.quantity);
+        }, 0));
+        setTotalDiscount(totalPrice - totalPayableAmout)
+
     }, [])
 
     return (

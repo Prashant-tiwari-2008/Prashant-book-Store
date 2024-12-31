@@ -13,7 +13,6 @@ const cartSlice = createSlice({
         },
 
         addItemToCart: (state, action) => {
-            debugger
             const newItem = action.payload;
             const existingItem = state.items.find(item => item._id === newItem._id);
 

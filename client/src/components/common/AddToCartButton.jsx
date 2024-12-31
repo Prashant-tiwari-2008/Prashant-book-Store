@@ -8,7 +8,6 @@ import { removeItemFromWishlist } from '../../redux/slices/WishListSlice';
 import { removeFromWishList } from '../../services/userService';
 
 const AddToCartButton = ({ book }) => {
-    debugger
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
