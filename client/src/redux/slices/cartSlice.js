@@ -13,7 +13,6 @@ const cartSlice = createSlice({
         },
 
         addItemToCart: (state, action) => {
-            debugger
             const newItem = action.payload;
             const existingItem = state.items.find(item => item.bookId._id === newItem._id);
 
@@ -25,33 +24,20 @@ const cartSlice = createSlice({
             state.totalitems += 1;
         },
 
-        //todo : check funcanality 
         removeItemFromCart: (state, action) => {
             const bookId = action.payload;
-            const existingItem = state.items.find(item => item._id === bookId);
-            if (existingItem) {
-                state.totalitems -= existingItem.quantity;
-                existingItem.quantity -= 1;
-                state.items = state.items.filter(item => item._id !== bookId);
-            } else {
-
-            }
+            state.items = state.items.filter(item => item.bookId._id !== bookId);
         },
 
-        // todo : need to check 
-        // updateItemQuantity: (state, action) => {
-        //     const { bookId, quantity } = action.payload; // Book ID and new quantity
+        reducerItemQuantity: (state, action) => {
+            const bookId = action.payload;
+            const existingItem = state.items.find(item => item.bookId._id === bookId);
 
-        //     const existingItem = state.items.find(item => item.bookId === bookId);
-
-        //     if (existingItem) {
-        //         // Adjust total items count
-        //         state.totalItems += quantity - existingItem.quantity;
-
-        //         // Update the item's quantity
-        //         existingItem.quantity = quantity;
-        //     }
-        // },
+            if (existingItem) {
+                state.totalitems -= 1;
+                existingItem.quantity -= 1;
+            }
+        },
 
         clearCart: state => {
             state.items = [];
@@ -61,5 +47,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { setCartList, addItemToCart, removeItemFromCart, clearCart } = cartSlice.actions;
+export const { setCartList, addItemToCart, removeItemFromCart, reducerItemQuantity, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

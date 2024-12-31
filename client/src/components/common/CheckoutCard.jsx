@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { IoClose } from "react-icons/io5";
 import { Button } from 'flowbite-react'
 import { useDispatch } from 'react-redux';
-import { removeFromCart } from '../../services/cartService';
-import { addItemToCart, removeItemFromCart } from '../../redux/slices/cartSlice';
+import { addToCart, removeFromCart } from '../../services/cartService';
+import { addItemToCart, reducerItemQuantity, removeItemFromCart } from '../../redux/slices/cartSlice';
 
-const CheckoutCard = ({ book,quantity }) => {
+const CheckoutCard = ({ book, quantity }) => {
 
     const dispatch = useDispatch();
+
 
     const handleRemoveFromCart = async () => {
         try {
@@ -22,6 +23,7 @@ const CheckoutCard = ({ book,quantity }) => {
     const handleIncrementItem = async () => {
         try {
             dispatch(addItemToCart(book));
+            await addToCart(book._id)
         } catch (error) {
             console.log("Error in incrementing item", error)
             dispatch(removeItemFromCart(book._id))
@@ -29,14 +31,18 @@ const CheckoutCard = ({ book,quantity }) => {
     }
 
     const handleDecrementItem = async () => {
+        debugger            
         try {
-            dispatch(removeItemFromCart(book))
+            if (quantity == 1) {
+                dispatch(removeItemFromCart(book._id))
+            } else {
+                dispatch(reducerItemQuantity(book._id))
+            }
         } catch (error) {
             console.log("Error in incrementing item", error)
             dispatch(addItemToCart(book));
         }
     }
-
 
     return (
         <>
@@ -70,7 +76,7 @@ const CheckoutCard = ({ book,quantity }) => {
                 {/* price detail and remove */}
                 <div className='flex flex-col float-right'>
                     <div className='float-right '>
-                        <IoClose className='float-right' onClick={() => handleRemoveFromCart()} />
+                        <IoClose className='float-right cursor-pointer' onClick={() => handleRemoveFromCart()} />
                     </div>
                     <div className='flex gap-2 mt-1 text-lg items-center'>
                         <div className='text-sm'><span>({(book.discount)}%)</span></div>

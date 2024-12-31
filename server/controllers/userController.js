@@ -321,3 +321,12 @@ export const removeFromCart = async (req, res, next) => {
         next(error)
     }
 }
+
+
+// addition controller need to create
+// Reduce Item Count: PUT /api/v1/cart/reduce/:bookId
+// Clear Cart: DELETE /api/v1/cart
+
+// Checkout Validation: POST /api/v1/cart/validate
+// Validate the cart before checkout.
+
